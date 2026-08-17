@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elif Tataroğlu — Visual Designer</title>
+
+<style>
+  @font-face {
+    font-family: 'ABC Favorit Mono Light';
+    src: url('assets/fonts/ABCFavoritMonoUnlicensedTrial-Light.otf') format('opentype');
+    font-weight: 300; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'ABC Favorit Mono';
+    src: url('assets/fonts/ABCFavoritMonoVariableUnlicensedTrial-Regular.ttf') format('truetype');
+    font-weight: 100 800; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'IM Fell French Canon';
+    src: url('assets/fonts/IM_FELL_French_Canon_Italic.ttf') format('truetype');
+    font-weight: 400; font-style: italic; font-display: swap;
+  }
+
+  :root{ --bg: #f7f6f2; --ink: #1a170f; }
+  *{ box-sizing: border-box; }
+  body{
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: 'ABC Favorit Mono Light', 'ABC Favorit Mono', monospace;
+    -webkit-font-smoothing: antialiased;
+    height: 200vh;
+  }
+
+  .name-block{ position:fixed; left:4vw; top:50%; transform:translateY(-50%); }
+  .name{ font-size:0.76rem; letter-spacing:0.14em; font-weight:300; color:var(--ink); }
+  .title{ font-family:'IM Fell French Canon', serif; font-style:italic; font-size:1.05rem; color:var(--ink); margin-top:0.2em; }
+
+  .email{
+    position:fixed; right:4vw; top:50%; transform:translateY(-50%);
+    font-size:0.76rem; letter-spacing:0.03em; color:var(--ink);
+    text-decoration:none;
+    opacity:0; transition: opacity 0.8s cubic-bezier(.22,.61,.36,1);
+  }
+  .email.visible{ opacity:1; }
+</style>
+</head>
+<body>
+
+  <div class="name-block">
+    <div class="name">ELİF TATAROĞLU</div>
+    <div class="title">Visual Designer</div>
+  </div>
+
+  <a class="email" id="emailLink" href="mailto:elif@eliftataroglu.com">elif@eliftataroglu.com</a>
+
+<script>
+  (function(){
+    var email = document.getElementById('emailLink');
+    function update(){
+      email.classList.toggle('visible', window.scrollY > window.innerHeight * 0.12);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+
+</body>
+</html>
