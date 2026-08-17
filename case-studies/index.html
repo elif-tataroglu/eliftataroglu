@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<base href="/case-studies/">
+<title>Elif Tataroğlu — Case Studies</title>
+
+<style>
+  #gate{ position:fixed; inset:0; z-index:9999; background:#f7f6f2; display:flex; align-items:center; justify-content:center; transition:opacity 0.5s ease; }
+  #gate.unlocked{ opacity:0; pointer-events:none; }
+  #gate form{ display:flex; flex-direction:column; align-items:center; gap:1.4em; }
+  #gate input{
+    font-family:'ABC Favorit Mono Light','ABC Favorit Mono',monospace; font-size:0.85rem; letter-spacing:0.04em;
+    background:transparent; border:none; border-bottom:1px solid rgba(26,23,15,0.34); color:#1a170f;
+    text-align:center; padding:0.5em 0; width:14em; outline:none;
+  }
+  #gate input::placeholder{ color:rgba(26,23,15,0.34); }
+  #gate .err{ font-size:0.7rem; letter-spacing:0.06em; color:#1a170f; opacity:0; height:1em; }
+  #gate .err.show{ opacity:0.55; }
+  #siteContent{ transition:opacity 0.4s ease; }
+  #siteContent.hidden{ opacity:0; }
+</style>
+
+<style>
+  @font-face {
+    font-family: 'ABC Favorit Mono Light';
+    src: url('assets/fonts/ABCFavoritMonoUnlicensedTrial-Light.otf') format('opentype');
+    font-weight: 300; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'ABC Favorit Mono';
+    src: url('assets/fonts/ABCFavoritMonoVariableUnlicensedTrial-Regular.ttf') format('truetype');
+    font-weight: 100 800; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'IM Fell French Canon';
+    src: url('assets/fonts/IM_FELL_French_Canon_Italic.ttf') format('truetype');
+    font-weight: 400; font-style: italic; font-display: swap;
+  }
+
+  :root{
+    --bg: #f7f6f2;
+    --ink: #1a170f;
+    --ink-soft: rgba(26,23,15,0.56);
+    --ink-faint: rgba(26,23,15,0.34);
+    --line: rgba(26,23,15,0.15);
+    --left-w: 40%;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: 'ABC Favorit Mono Light', 'ABC Favorit Mono', monospace;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, video{ max-width: 100%; display: block; }
+
+  /* ---------- Left fixed panel ---------- */
+  .left-panel{ position: fixed; top:0; left:0; width: var(--left-w); height: 100vh; border-right: 1px solid var(--line); z-index: 20; display:flex; flex-direction:column; }
+
+  /* Name/title: docks top-left permanently once you leave the cover. Only the cover shows it centered. */
+  .brand{ position:relative; flex:0 0 auto; padding: 3.6vh 4vw 0; transition: transform 1.05s cubic-bezier(.22,.61,.36,1); transform: translateY(0); }
+  .left-panel.at-hero .brand{ transform: translateY(calc(50vh - 70px)); }
+  .brand-name{ font-size:0.6rem; letter-spacing:0.14em; font-weight:300; transition: font-size 1.05s cubic-bezier(.22,.61,.36,1); }
+  .brand-title{ font-family:'IM Fell French Canon', serif; font-style:italic; font-size:0.8rem; color:var(--ink-soft); margin-top:0.2em; transition: font-size 1.05s cubic-bezier(.22,.61,.36,1); }
+  .left-panel.at-hero .brand-name{ font-size:0.76rem; }
+  .left-panel.at-hero .brand-title{ font-size:1.05rem; }
+
+  .dynamic{ position:relative; flex:1 1 auto; min-height:0; padding:0 4vw; transition: opacity 0.6s ease; display:flex; align-items:center; overflow-y:auto; scrollbar-width:none; }
+  .dynamic::-webkit-scrollbar{ display:none; }
+  .left-panel.at-hero .dynamic, .left-panel.at-divider .dynamic{ opacity:0; pointer-events:none; }
+  .dynamic-inner{ opacity:1; transform:translateY(0); transition: opacity 0.42s cubic-bezier(.22,.61,.36,1), transform 0.5s cubic-bezier(.22,.61,.36,1); max-height:100%; overflow-y:auto; scrollbar-width:none; width:100%; text-align:left; }
+  .dynamic-inner::-webkit-scrollbar{ display:none; }
+  .dynamic-inner.fading{ opacity:0; transform:translateY(10px); }
+  .dyn-eyebrow{ display:none; }
+  .dyn-heading{ font-family:'IM Fell French Canon', serif; font-style:italic; font-weight:400; font-size:clamp(1.7rem,2.3vw,2.2rem); line-height:1.08; margin:0 0 0.55em 0; }
+  .dyn-sub{ font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-faint); margin:-0.3em 0 0.9em; }
+  .dyn-stats{ display:flex; flex-wrap:wrap; justify-content:flex-start; row-gap:1.4em; margin:0.6em 0 1.6em; padding-bottom:1.6em; border-bottom:1px solid var(--line); }
+  .dyn-stats .st{ padding:0 1em; border-left:1px solid var(--line); max-width:15em; }
+  .dyn-stats .st:first-child{ padding-left:0; border-left:none; }
+  .dyn-stats .st-num{ font-family:'ABC Favorit Mono', 'ABC Favorit Mono Light', monospace; font-weight:500; font-size:1.65rem; letter-spacing:0.01em; line-height:1; white-space:nowrap; }
+  .dyn-stats .st-label{ font-family:'IM Fell French Canon', serif; font-style:italic; font-size:0.76rem; color:var(--ink-soft); margin-top:0.35em; }
+  .dyn-index{ font-size:0.7rem; letter-spacing:0.14em; color:var(--ink-faint); margin-bottom:1.4em; }
+
+  .panel-bottom{ position:relative; flex:0 0 auto; padding:0 4vw 3.6vh; transition: opacity 0.6s ease; }
+  .left-panel.at-hero .panel-bottom{ opacity:0; pointer-events:none; }
+  .index-nav{ display:flex; flex-direction:column; gap:0.5em; }
+  .index-nav .idx-item{ display:flex; align-items:baseline; gap:0.7em; font-size:0.72rem; letter-spacing:0.04em; color:var(--ink-faint); cursor:pointer; }
+  .index-nav .idx-item.active{ color:var(--ink); }
+  .index-nav .idx-name{ font-family:'IM Fell French Canon', serif; font-style:italic; font-size:0.95rem; }
+
+  /* Chapter-divider logo — replaces the repeated "Case Studies" hero word for each client. */
+  .divider-logo{ width:min(150px, 30vw); }
+  .divider-logo img{ display:block; width:100%; height:auto; }
+
+  /* ---------- Right scroll panel ---------- */
+  .right-panel{ margin-left: var(--left-w); width: calc(100% - var(--left-w)); padding: 0 5vw; }
+
+  section.hero-stage{ height:100vh; display:flex; align-items:center; justify-content:flex-start; }
+  .hero-word{ font-family:'IM Fell French Canon', serif; font-style:italic; font-size:clamp(1.6rem,2.4vw,2.1rem); }
+  .hero-stage.chapter-divider{ height:100vh; }
+
+  .client-intro{ padding: 14vh 0 16vh; }
+  .client-intro.follow{ padding-top: 10vh; }
+  .client-intro-body{ font-size:0.84rem; line-height:1.65; color:var(--ink-soft); font-weight:300; max-width:56ch; margin-bottom:3vh; }
+  .client-intro .img-card{ margin-bottom: 3vh; }
+
+  .reveal{ opacity:1; transform:translateY(0); transition: opacity 0.9s cubic-bezier(.22,.61,.36,1), transform 0.9s cubic-bezier(.22,.61,.36,1); }
+  .reveal.js-hidden{ opacity:0; transform:translateY(24px); }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  .img-card, .vid-card{ background:#eae8e2; overflow:hidden; }
+  .img-card img, .vid-card video{ width:100%; height:auto; display:block; }
+
+  section.category{ padding: 19vh 0; }
+  .sub-heading{ font-family:'IM Fell French Canon', serif; font-style:italic; font-size:clamp(1.15rem,1.7vw,1.4rem); margin:0 0 2em 0; }
+
+  .story-row{ display:grid; grid-template-columns: repeat(3,1fr); gap:1.3vw; }
+  .story-row-4{ display:grid; grid-template-columns: repeat(4,1fr); gap:1.1vw; }
+  .athens-block{ margin-top:13vh; }
+
+  .solo-row{ display:flex; flex-direction:column; align-items:center; gap:13vh; }
+  .solo-item{ width:100%; max-width:420px; }
+
+  /* Grid, not masonry columns — masonry reflows items out of DOM order (an item can jump to
+     the top of a later column), which breaks the intended numbered sequence of the images. */
+  .gallery{ display:grid; grid-template-columns: repeat(3,1fr); gap:1.3vw; align-items:start; }
+
+  /* SS27 orientation rule */
+  .ss-h{ margin-bottom: 1.3vw; }
+  .ss-v3{ display:grid; grid-template-columns: repeat(3,1fr); gap:1.3vw; margin-bottom:1.3vw; }
+  .row-2{ display:grid; grid-template-columns: repeat(2,1fr); gap:1.3vw; align-items:start; }
+  .row-3{ display:grid; grid-template-columns: repeat(3,1fr); gap:1.3vw; align-items:start; }
+
+  /* Height-matched row — items share one height, width follows each item's own aspect ratio
+     (flex-grow set per item, proportional to its aspect ratio) instead of splitting evenly. */
+  .row-h{ display:flex; gap:1.3vw; height:34vh; }
+  .row-h .img-card, .row-h .vid-card{ height:100%; min-width:0; }
+  .row-h .img-card img, .row-h .vid-card video{ width:100%; height:100%; object-fit:cover; }
+  .grid-3{ display:grid; grid-template-columns: repeat(3,1fr); gap:1.3vw; }
+
+  /* Meta Ads: one row per ad concept ("set"), its format variants shown together, bottom-aligned */
+  .ads-set{ display:flex; align-items:flex-end; gap:1.3vw; margin-bottom:4.5vh; }
+  .ads-set .img-card{ flex:1 1 0; min-width:0; }
+  .ads-set-label{ font-size:0.62rem; letter-spacing:0.08em; color:var(--ink-faint); text-transform:uppercase; margin-bottom:1em; }
+
+  /* Carousel — real swipe/scroll-snap, works with trackpad, touch and mouse drag */
+  .carousel{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:1.3vw; scrollbar-width:none; -webkit-overflow-scrolling:touch; margin:0 -1px; }
+  .carousel::-webkit-scrollbar{ display:none; }
+  .carousel .img-card{ flex:0 0 62%; scroll-snap-align:center; }
+  .carousel-dots{ display:flex; gap:0.5em; justify-content:center; margin-top:1.6em; }
+  .carousel-dots .dot{ width:5px; height:5px; border-radius:50%; background:var(--line); cursor:pointer; transition:background 0.3s ease, transform 0.3s ease; }
+  .carousel-dots .dot.active{ background:var(--ink-faint); transform:scale(1.6); }
+
+  /* Laptop mockup — already a fully composited screenshot, used as a single flat image.
+     Bled past the right padding so it reads bigger than the text column above it. */
+  .laptop-mockup{ width:calc(100% + 5vw); margin-right:-5vw; }
+  .laptop-mockup img{ width:100%; height:auto; display:block; }
+
+  /* Flat moodboard exports — single pre-composed image, transparent background, no DOM reconstruction */
+  .moodboard-flat{ margin: 1vh 0 2vh; }
+  .moodboard-flat img{ width:100%; height:auto; display:block; }
+
+  /* Locations carousel — venue illustrations, white bg multiplied away to blend with the page */
+  .locations-carousel .location-item{ flex:0 0 62%; scroll-snap-align:center; }
+  .location-card{ background: var(--bg); }
+  .location-card img{ mix-blend-mode: multiply; }
+  .location-name{ margin-top:0.8em; font-size:0.62rem; letter-spacing:0.08em; color:var(--ink-faint); text-transform:uppercase; }
+
+  /* Prominent inline stat numbers — used wherever a key figure needs to read clearly
+     in the main content flow, not just in the sidebar. */
+  .stats-row{ display:flex; flex-wrap:wrap; gap:2.2em 3.4em; }
+  .stats-row .stat-num{ font-family:'ABC Favorit Mono', 'ABC Favorit Mono Light', monospace; font-weight:500; font-size:clamp(2.1rem,3.6vw,3rem); line-height:1; color:var(--ink); }
+  .stats-row .stat-label{ font-family:'IM Fell French Canon', serif; font-style:italic; font-size:0.92rem; color:var(--ink-soft); margin-top:0.4em; }
+
+  .motivation-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.4vw; }
+  .motivation-name{ font-family:'IM Fell French Canon',serif; font-style:italic; font-size:1.1rem; margin-bottom:0.5em; }
+  .motivation-desc{ font-size:0.8rem; line-height:1.6; color:var(--ink-soft); font-weight:300; }
+
+  footer.end{ padding:8vh 0 18vh; border-top:1px solid var(--line); margin-top:4vh; font-size:0.7rem; letter-spacing:0.08em; color:var(--ink-faint); text-transform:uppercase; }
+
+  @media (max-width: 880px){
+    :root{ --left-w: 100%; }
+    .left-panel{ position:relative; height:auto; border-right:none; border-bottom:1px solid var(--line); padding-bottom:3vh; }
+    .brand{ position:relative; top:0; left:0; padding:3vh 6vw 0; transform:none !important; }
+    .dynamic{ position:relative; left:0; right:0; top:0; transform:none; padding:3vh 6vw 0; max-width:none; }
+    .left-panel.at-hero .dynamic, .left-panel.at-hero .panel-bottom,
+    .left-panel.at-divider .dynamic, .left-panel.at-divider .panel-bottom{ opacity:1; pointer-events:auto; }
+    .panel-bottom{ position:relative; left:0; bottom:0; padding:3vh 6vw 0; }
+    .right-panel{ margin-left:0; width:100%; padding:0 6vw; }
+    section.hero-stage, .hero-stage.chapter-divider{ height:60vh; justify-content:center; }
+    .story-row, .story-row-4{ grid-template-columns: repeat(2,1fr); }
+    .gallery{ grid-template-columns: repeat(2,1fr); }
+    .ss-v3, .row-2, .row-3, .grid-3, .contribute-grid{ grid-template-columns: repeat(2,1fr); }
+    .motivation-grid{ grid-template-columns: 1fr; gap:2em; }
+    .row-h{ flex-direction:column; height:auto; }
+    .row-h .img-card, .row-h .vid-card{ height:auto; }
+    .row-h .img-card img, .row-h .vid-card video{ height:auto; object-fit:initial; }
+    .locations-carousel .location-item{ flex:0 0 82%; }
+    .laptop-mockup{ width:100%; margin-right:0; }
+    .ads-set{ flex-direction:column; align-items:stretch; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="gate">
+    <form id="gateForm">
+      <input type="password" id="gatePassword" placeholder="Password" autocomplete="off" autofocus>
+      <div class="err" id="gateErr">Incorrect password</div>
+    </form>
+  </div>
+
+  <div id="siteContent" class="hidden">
+
+  <aside class="left-panel at-hero" id="leftPanel">
+    <div class="brand" id="brand">
+      <div class="brand-name">ELİF TATAROĞLU</div>
+      <div class="brand-title">Visual Direction · Brand Design · Digital Growth</div>
+    </div>
+
+    <div class="dynamic" id="dynamic">
+      <div class="dynamic-inner" id="dynamicInner">
+        <div class="dyn-index" id="dynIndex" style="display:none;"></div>
+        <div class="dyn-eyebrow" id="dynEyebrow"></div>
+        <h1 class="dyn-heading" id="dynHeading">Background</h1>
+        <div class="dyn-sub" id="dynSub" style="display:none;"></div>
+        <div class="dyn-stats" id="dynStats" style="display:none;"></div>
+      </div>
+    </div>
+
+    <div class="panel-bottom">
+      <nav class="index-nav" id="indexNav">
+        <div class="idx-item" data-target="about-edu"><span class="idx-num">01</span><span class="idx-name">About</span></div>
+        <div class="idx-item" data-target="moeva-intro"><span class="idx-num">02</span><span class="idx-name">Moeva</span></div>
+        <div class="idx-item" data-target="lilyrose-intro"><span class="idx-num">03</span><span class="idx-name">Lilyrose</span></div>
+        <div class="idx-item" data-target="fleu-intro"><span class="idx-num">04</span><span class="idx-name">Fléu</span></div>
+        <div class="idx-item" data-target="attire-intro"><span class="idx-num">05</span><span class="idx-name">Attire</span></div>
+      </nav>
+    </div>
+  </aside>
+
+  <main class="right-panel">
+
+    <section class="hero-stage">
+      <div class="hero-word">Case Studies</div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section class="hero-stage chapter-divider" id="about-divider"
+      data-eyebrow="ABOUT" data-heading="Introduction"
+      data-body="I am a multidisciplinary designer working across branding, packaging, fashion and digital communication.">
+      <div class="hero-word">About Me</div>
+    </section>
+
+    <section class="client-intro" id="about-edu"
+      data-eyebrow="ABOUT" data-heading="Introduction"
+      data-body="I am a multidisciplinary designer working across branding, packaging, fashion and digital communication. My experience combines visual direction with a strategic understanding of how brands build identity, connect with audiences and drive growth.">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:4vw; margin-top:2vh;">
+        <div>
+          <div style="font-size:0.7rem; letter-spacing:0.14em; color:var(--ink-faint); text-transform:uppercase; margin-bottom:1.6em;">Education</div>
+          <div class="reveal" style="margin-bottom:1.8em;">
+            <div style="font-family:'IM Fell French Canon',serif; font-style:italic; font-size:1.15rem;">BA in Graphic Design</div>
+            <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:0.25em; line-height:1.5;">Mimar Sinan Fine Arts University<br>Istanbul, Türkiye</div>
+          </div>
+          <div class="reveal" style="margin-bottom:1.8em;">
+            <div style="font-family:'IM Fell French Canon',serif; font-style:italic; font-size:1.15rem;">Graphic Design &amp; Art Direction</div>
+            <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:0.25em; line-height:1.5;">Nuova Accademia di Belle Arti<br>Milan, Italy</div>
+          </div>
+          <div class="reveal" style="margin-bottom:1.8em;">
+            <div style="font-family:'IM Fell French Canon',serif; font-style:italic; font-size:1.15rem;">MSc in Digital Fashion Communication</div>
+            <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:0.25em; line-height:1.5;">Double degree —<br>Università della Svizzera Italiana, Lugano<br>Université Paris 1 Panthéon-Sorbonne, Paris</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.7rem; letter-spacing:0.14em; color:var(--ink-faint); text-transform:uppercase; margin-bottom:1.6em;">Experience</div>
+          <div class="reveal" style="margin-bottom:1.8em;">
+            <div style="font-family:'IM Fell French Canon',serif; font-style:italic; font-size:1.15rem;">Sezen Tunca Studio</div>
+            <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:0.25em; line-height:1.5;">Art Director &amp; Visual Designer</div>
+          </div>
+          <div class="reveal" style="margin-bottom:1.8em;">
+            <div style="font-family:'IM Fell French Canon',serif; font-style:italic; font-size:1.15rem;">Studio Born</div>
+            <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:0.25em; line-height:1.5;">Art Director &amp; Visual Designer</div>
+          </div>
+          <div class="reveal" style="margin-bottom:1.8em;">
+            <div style="font-family:'IM Fell French Canon',serif; font-style:italic; font-size:1.15rem;">Aytül Ayke Studio</div>
+            <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:0.25em; line-height:1.5;">Freelance Designer</div>
+          </div>
+          <div class="reveal" style="margin-top:2.4em; font-size:0.72rem; color:var(--ink-faint); line-height:1.6;">PR agency of LVMH Group brands and other leading international clients.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category" id="about-works"
+      data-eyebrow="ABOUT" data-heading="My Practice"
+      data-body="My work spans branding, packaging, art direction, illustration, motion design and digital marketing — creating consistent brand experiences across physical and digital touchpoints.">
+      <div class="moodboard-flat reveal"><img src="assets/moodboard-final/works.png" loading="lazy" alt=""></div>
+    </section>
+
+    <section class="category" id="about-inspire"
+      data-eyebrow="ABOUT" data-heading="Inspiration"
+      data-body="My visual perspective is shaped by art history, contemporary art and architecture. I actively visit exhibitions, museums and cultural spaces, using my own photography to document the ideas, details and compositions that inspire me. I follow trends, but always reinterpret them through my own visual perspective.">
+      <div class="moodboard-flat reveal"><img src="assets/moodboard-final/inspire.png" loading="lazy" alt=""></div>
+    </section>
+
+    <!-- ===================== MOEVA ===================== -->
+    <section class="hero-stage chapter-divider" id="moeva-divider"
+      data-eyebrow="CLIENT — MOEVA" data-heading="Moeva"
+      data-body="Founded in 2012, MOEVA is an international luxury swimwear and resortwear brand with a presence across more than 45 countries. The brand brings together modern design, refined craftsmanship and luxury travel dressing across women's, men's and children's collections."
+      data-logo="assets/logos/moeva.svg">
+      <div class="divider-logo"><img src="assets/logos/moeva.svg" alt="Moeva"></div>
+    </section>
+
+    <section class="client-intro follow" id="moeva-intro"
+      data-eyebrow="CLIENT — MOEVA" data-heading="Moeva"
+      data-body="Founded in 2012, MOEVA is an international luxury swimwear and resortwear brand with a presence across more than 45 countries. The brand brings together modern design, refined craftsmanship and luxury travel dressing across women's, men's and children's collections."
+      data-logo="assets/logos/moeva.svg">
+      <div class="moodboard-flat reveal"><img src="assets/moodboard-final/moeva.png" loading="lazy" alt=""></div>
+    </section>
+
+    <section class="category" id="moeva-locations">
+      <div class="carousel locations-carousel">
+        <div class="location-item">
+          <div class="img-card location-card reveal"><img src="assets/moeva/locations-1.jpg" loading="lazy" alt=""></div>
+          <div class="location-name">Four Seasons Resort Maldives at Kuda Huraa</div>
+        </div>
+        <div class="location-item">
+          <div class="img-card location-card reveal"><img src="assets/moeva/locations-2.jpg" loading="lazy" alt=""></div>
+          <div class="location-name">Four Seasons Hotel Istanbul at the Bosphorus</div>
+        </div>
+        <div class="location-item">
+          <div class="img-card location-card reveal"><img src="assets/moeva/locations-3.jpg" loading="lazy" alt=""></div>
+          <div class="location-name">Mandarin Oriental Bodrum</div>
+        </div>
+        <div class="location-item">
+          <div class="img-card location-card reveal"><img src="assets/moeva/locations-4.jpg" loading="lazy" alt=""></div>
+          <div class="location-name">The Bodrum EDITION</div>
+        </div>
+        <div class="location-item">
+          <div class="img-card location-card reveal"><img src="assets/moeva/locations-5.jpg" loading="lazy" alt=""></div>
+          <div class="location-name">Maxx Royal Kemer Resort</div>
+        </div>
+        <div class="location-item">
+          <div class="img-card location-card reveal"><img src="assets/moeva/locations-6.jpg" loading="lazy" alt=""></div>
+          <div class="location-name">Gloria Serenity Resort</div>
+        </div>
+        <div class="location-item">
+          <div class="img-card location-card reveal"><img src="assets/moeva/locations-7.jpg" loading="lazy" alt=""></div>
+          <div class="location-name">Regnum Carya</div>
+        </div>
+        <div class="location-item">
+          <div class="img-card location-card reveal"><img src="assets/moeva/locations-8.jpg" loading="lazy" alt=""></div>
+          <div class="location-name">Bodrum Loft</div>
+        </div>
+      </div>
+      <div class="carousel-dots"></div>
+    </section>
+
+    <section class="category" id="moeva-role"
+      data-eyebrow="MY ROLE — MOEVA" data-heading="My Role"
+      data-body=""
+      data-logo="assets/logos/moeva.svg">
+      <div class="approach-lines reveal">
+        <div>Visual Direction</div>
+        <div>Digital Campaigns</div>
+        <div>Social Media</div>
+        <div>Email Marketing</div>
+        <div>Illustration</div>
+        <div>Retail Communication</div>
+      </div>
+    </section>
+
+    <section class="category" id="digital-reach"
+      data-eyebrow="DIGITAL REACH — MOEVA" data-heading="Digital Reach"
+      data-body="I develop a consistent visual language across MOEVA's digital channels, international boutiques and seasonal campaigns."
+      data-logo="assets/logos/moeva.svg"
+      data-stats="3M|Instagram Reach;5K|Post Views;3K|Story Views;40K|Subscribers">
+    </section>
+
+    <section class="category" id="moeva-website">
+      <div style="display:flex; flex-direction:column; gap:1.3vw;">
+        <div class="img-card reveal"><img src="assets/moeva/intro-1.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/intro-2.jpg" loading="lazy" alt=""></div>
+      </div>
+    </section>
+
+    <section class="category" id="stories"
+      data-eyebrow="STORIES — MOEVA" data-heading="Stories"
+      data-body=""
+      data-logo="assets/logos/moeva.svg">
+      <div class="story-row">
+        <div class="vid-card reveal"><video src="assets/moeva/video/story-1.mp4" poster="assets/moeva/video/posters/story-1.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="vid-card reveal"><video src="assets/moeva/video/story-2.mp4" poster="assets/moeva/video/posters/story-2.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="vid-card reveal"><video src="assets/moeva/video/story-3.mp4" poster="assets/moeva/video/posters/story-3.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-4.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-5.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-6.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-7.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-8.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-9.jpg" loading="lazy" alt=""></div>
+        <div class="vid-card reveal"><video src="assets/moeva/video/story-10.mp4" poster="assets/moeva/video/posters/story-10.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="vid-card reveal"><video src="assets/moeva/video/story-11.mp4" poster="assets/moeva/video/posters/story-11.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="vid-card reveal"><video src="assets/moeva/video/story-12.mp4" poster="assets/moeva/video/posters/story-12.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-13.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-14.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-15.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-16.jpg" loading="lazy" alt=""></div>
+        <div class="vid-card reveal"><video src="assets/moeva/video/story-17.mp4" poster="assets/moeva/video/posters/story-17.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-18.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-19.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-20.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-21.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-22.jpg" loading="lazy" alt=""></div>
+        <div class="vid-card reveal"><video src="assets/moeva/video/story-23.mp4" poster="assets/moeva/video/posters/story-23.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="img-card reveal"><img src="assets/moeva/story-24.jpg" loading="lazy" alt=""></div>
+      </div>
+      <div class="athens-block">
+        <div class="story-row-4">
+          <div class="img-card reveal"><img src="assets/moeva/athens-1.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/athens-2.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/athens-3.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/athens-4.jpg" loading="lazy" alt=""></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category" id="igfeed"
+      data-eyebrow="IG FEED — MOEVA" data-heading="IG Feed"
+      data-body=""
+      data-logo="assets/logos/moeva.svg">
+      <div class="solo-row">
+        <div class="solo-item"><div class="img-card reveal"><img src="assets/moeva/feed-1.jpg" loading="lazy" alt=""></div></div>
+        <div class="solo-item"><div class="img-card reveal"><img src="assets/moeva/feed-2.jpg" loading="lazy" alt=""></div></div>
+        <div class="solo-item"><div class="img-card reveal"><img src="assets/moeva/feed-3.jpg" loading="lazy" alt=""></div></div>
+        <div class="solo-item"><div class="img-card reveal"><img src="assets/moeva/intro-4.jpg" loading="lazy" alt=""></div></div>
+        <div class="solo-item"><div class="img-card reveal"><img src="assets/moeva/intro-5.jpg" loading="lazy" alt=""></div></div>
+      </div>
+    </section>
+
+    <section class="category" id="mailing"
+      data-eyebrow="MAILING — MOEVA" data-heading="E-mail Marketing"
+      data-body=""
+      data-logo="assets/logos/moeva.svg">
+      <div class="solo-row">
+        <div class="solo-item" data-eyebrow="E-MAIL MARKETING — MOEVA" data-heading="E-mail Marketing" data-sub="Customers" data-logo="assets/logos/moeva.svg"><div class="img-card reveal"><img src="assets/moeva/mail-1.gif" loading="lazy" alt=""></div></div>
+        <div class="solo-item" data-eyebrow="E-MAIL MARKETING — MOEVA" data-heading="E-mail Marketing" data-sub="Customers" data-logo="assets/logos/moeva.svg"><div class="img-card reveal"><img src="assets/moeva/mail-2.jpg" loading="lazy" alt=""></div></div>
+        <div class="solo-item" data-eyebrow="E-MAIL MARKETING — MOEVA" data-heading="E-mail Marketing" data-sub="Customers" data-logo="assets/logos/moeva.svg"><div class="img-card reveal"><img src="assets/moeva/mail-3.gif" loading="lazy" alt=""></div></div>
+        <div class="solo-item" data-eyebrow="E-MAIL MARKETING — MOEVA" data-heading="E-mail Marketing" data-sub="Buyers" data-logo="assets/logos/moeva.svg"><div class="img-card reveal"><img src="assets/moeva/mail-4.jpg" loading="lazy" alt=""></div></div>
+        <div class="solo-item" data-eyebrow="E-MAIL MARKETING — MOEVA" data-heading="E-mail Marketing" data-sub="Press" data-logo="assets/logos/moeva.svg"><div class="img-card reveal"><img src="assets/moeva/mail-5.jpg" loading="lazy" alt=""></div></div>
+      </div>
+    </section>
+
+    <section class="category" id="campaigns"
+      data-eyebrow="CAMPAIGNS — MOEVA" data-heading="Campaigns"
+      data-body=""
+      data-logo="assets/logos/moeva.svg">
+      <div class="gallery">
+        <div class="img-card reveal"><img src="assets/moeva/camp-1.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/camp-2.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/camp-3.jpg" loading="lazy" alt=""></div>
+      </div>
+    </section>
+
+    <section class="category" id="aiimagery"
+      data-eyebrow="AI IMAGERY — MOEVA" data-heading="AI Imagery"
+      data-body=""
+      data-logo="assets/logos/moeva.svg">
+      <div class="gallery">
+        <div class="img-card reveal"><img src="assets/moeva/ai-1.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-2.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-3.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-4.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-5.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-6.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-7.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-8.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-9.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-10.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-11.jpg" loading="lazy" alt=""></div>
+        <div class="vid-card reveal"><video src="assets/moeva/video/ai-1.mp4" poster="assets/moeva/video/posters/ai-1.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="vid-card reveal"><video src="assets/moeva/video/ai-2.mp4" poster="assets/moeva/video/posters/ai-2.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="vid-card reveal"><video src="assets/moeva/video/ai-3.mp4" poster="assets/moeva/video/posters/ai-3.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="vid-card reveal"><video src="assets/moeva/video/ai-4.mp4" poster="assets/moeva/video/posters/ai-4.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-12.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-13.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/moeva/ai-14.jpg" loading="lazy" alt=""></div>
+      </div>
+    </section>
+
+    <section class="category" id="ss27"
+      data-eyebrow="SS27 — MOEVA" data-heading="SS27"
+      data-body=""
+      data-logo="assets/logos/moeva.svg">
+      <div class="athens-block"
+        data-eyebrow="CAMPAIGN — MOEVA" data-heading="Campaign"
+        data-body="" data-logo="assets/logos/moeva.svg">
+        <div class="ss-h reveal img-card"><img src="assets/moeva/ss27-h1.jpg" loading="lazy" alt=""></div>
+        <div class="ss-v3">
+          <div class="img-card reveal"><img src="assets/moeva/ss27-v1.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/ss27-v2.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/ss27-v3.jpg" loading="lazy" alt=""></div>
+        </div>
+        <div class="ss-h reveal img-card"><img src="assets/moeva/ss27-h2.jpg" loading="lazy" alt=""></div>
+        <div class="ss-h reveal img-card"><img src="assets/moeva/ss27-h3.jpg" loading="lazy" alt=""></div>
+      </div>
+
+      <div class="athens-block"
+        data-eyebrow="LOOKBOOK — MOEVA" data-heading="Lookbook"
+        data-body="" data-logo="assets/logos/moeva.svg">
+        <div class="gallery">
+          <div class="img-card reveal"><img src="assets/moeva/ss27-lb1.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/ss27-lb2.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/ss27-lb3.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/ss27-lb4.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/ss27-lb5.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/ss27-lb6.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/ss27-lb7.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/ss27-lb8.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/moeva/ss27-lb9.jpg" loading="lazy" alt=""></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LILYROSE ===================== -->
+    <section class="hero-stage chapter-divider" id="lilyrose-divider"
+      data-eyebrow="CLIENT — LILYROSE" data-heading="Designing for Loyalty"
+      data-body="Unlike MOEVA's broader mix of new and returning customers, Shopify data showed that LILYROSE has a highly loyal customer base. This insight shaped our strategy: email became a key channel for reconnecting with customers who already knew, trusted and actively followed the brand."
+      data-logo="assets/logos/lilyrose.svg">
+      <div class="divider-logo"><img src="assets/logos/lilyrose.svg" alt="Lilyrose"></div>
+    </section>
+
+    <section class="client-intro follow" id="lilyrose-intro"
+      data-eyebrow="CLIENT — LILYROSE" data-heading="Designing for Loyalty"
+      data-body="Unlike MOEVA's broader mix of new and returning customers, Shopify data showed that LILYROSE has a highly loyal customer base. This insight shaped our strategy: email became a key channel for reconnecting with customers who already knew, trusted and actively followed the brand."
+      data-logo="assets/logos/lilyrose.svg">
+      <div class="moodboard-flat reveal"><img src="assets/moodboard-final/lilyrose.png" loading="lazy" alt=""></div>
+    </section>
+
+    <section class="category" id="lilyrose-role"
+      data-eyebrow="MY ROLE — LILYROSE" data-heading="My Role"
+      data-body=""
+      data-logo="assets/logos/lilyrose.svg">
+      <div class="approach-lines reveal">
+        <div>Visual Direction</div>
+        <div>Digital Campaigns</div>
+        <div>Social Media</div>
+        <div>Email Marketing</div>
+      </div>
+    </section>
+
+    <section class="category" id="lr-mailing"
+      data-eyebrow="MAILING — LILYROSE" data-heading="Email as a Sales Channel"
+      data-body="Audience-led campaigns designed around product relevance, seasonality and customer loyalty. Individual campaigns generated more than $3K and $2K in attributed sales."
+      data-logo="assets/logos/lilyrose.svg">
+      <div class="solo-row">
+        <div class="solo-item">
+          <div class="img-card reveal"><img src="assets/lilyrose/mail-1.gif" loading="lazy" alt=""></div>
+        </div>
+        <div class="solo-item"
+          data-eyebrow="MAILING — LILYROSE" data-heading="Email as a Sales Channel"
+          data-body="" data-logo="assets/logos/lilyrose.svg"
+          data-stats="$3K+|Attributed Sales From A Single Email Campaign">
+          <div class="img-card reveal"><img src="assets/lilyrose/mail-2.jpg" loading="lazy" alt=""></div>
+        </div>
+        <div class="solo-item">
+          <div class="img-card reveal"><img src="assets/lilyrose/mail-3.jpg" loading="lazy" alt=""></div>
+        </div>
+        <div class="solo-item">
+          <div class="img-card reveal"><img src="assets/lilyrose/mail-5.gif" loading="lazy" alt=""></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category" id="lr-stories"
+      data-eyebrow="STORIES — LILYROSE" data-heading="A More Personal Brand World"
+      data-body="For LILYROSE Stories, we developed a more spontaneous, colourful and personal visual language — creating a closer relationship with the brand's loyal community."
+      data-logo="assets/logos/lilyrose.svg">
+      <div class="story-row">
+        <div class="img-card reveal"><img src="assets/lilyrose/story-1.jpg" loading="lazy" alt=""></div>
+        <div class="vid-card reveal"><video src="assets/lilyrose/video/story-2.mp4" poster="assets/lilyrose/video/posters/story-2.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/story-3.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/story-4.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/story-5.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/story-6.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/story-7.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/story-8.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/story-9.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/story-10.jpg" loading="lazy" alt=""></div>
+        <div class="vid-card reveal"><video src="assets/lilyrose/video/story-11.mp4" poster="assets/lilyrose/video/posters/story-11.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/story-12.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/story-13.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/story-14.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/story-15.jpg" loading="lazy" alt=""></div>
+      </div>
+    </section>
+
+    <section class="category" id="lr-ai"
+      data-eyebrow="AI IMAGERY — LILYROSE" data-heading="Campaigns Without a Photoshoot"
+      data-body="When no campaign shoot was produced, I used AI to create new visual worlds around the existing collection. The objective was not simply to generate images, but to build consistent, campaign-ready content aligned with the brand identity."
+      data-logo="assets/logos/lilyrose.svg">
+      <div class="gallery">
+        <div class="img-card reveal"><img src="assets/lilyrose/ai-1.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/ai-2.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/ai-3.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/ai-4.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/ai-5.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/ai-6.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/ai-7.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/ai-8.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/ai-9.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/ai-10.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/ai-11.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/lilyrose/ai-12.jpg" loading="lazy" alt=""></div>
+      </div>
+    </section>
+
+    <!-- ===================== FLEU ===================== -->
+    <section class="hero-stage chapter-divider" id="fleu-divider"
+      data-eyebrow="CLIENT — FLÉU" data-heading="Fléu"
+      data-body="A contemporary handbag brand built around refined design, craftsmanship and everyday functionality. My work spans the complete customer journey — from brand identity and packaging to content, e-commerce and paid media."
+      data-logo="assets/logos/fleu.svg">
+      <div class="divider-logo"><img src="assets/logos/fleu.svg" alt="Fléu"></div>
+    </section>
+
+    <section class="client-intro follow" id="fleu-intro"
+      data-eyebrow="CLIENT — FLÉU" data-heading="Fléu"
+      data-body="A contemporary handbag brand built around refined design, craftsmanship and everyday functionality. My work spans the complete customer journey — from brand identity and packaging to content, e-commerce and paid media."
+      data-logo="assets/logos/fleu.svg">
+      <div style="display:flex; flex-direction:column; gap:1.3vw;">
+        <div class="row-2">
+          <div class="img-card reveal"><img src="assets/fleu/bp-1.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/fleu/bp-2.jpg" loading="lazy" alt=""></div>
+        </div>
+        <div class="row-2">
+          <div class="img-card reveal"><img src="assets/fleu/bp-3.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/fleu/bp-4.jpg" loading="lazy" alt=""></div>
+        </div>
+        <div class="img-card reveal"><img src="assets/fleu/bp-5.jpg" loading="lazy" alt=""></div>
+        <div class="row-h">
+          <div class="vid-card reveal" style="flex:0.5625 1 0;"><video src="assets/fleu/video/bp-6.mp4" poster="assets/fleu/video/posters/bp-6.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+          <div class="img-card reveal" style="flex:0.7536 1 0;"><img src="assets/fleu/bp-7.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal" style="flex:0.75 1 0;"><img src="assets/fleu/bp-8.jpg" loading="lazy" alt=""></div>
+        </div>
+        <div class="row-2">
+          <div class="img-card reveal"><img src="assets/fleu/bp-9.jpg" loading="lazy" alt=""></div>
+          <div class="img-card reveal"><img src="assets/fleu/bp-10.jpg" loading="lazy" alt=""></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category" id="fleu-role"
+      data-eyebrow="MY ROLE — FLÉU" data-heading="My Role"
+      data-body=""
+      data-logo="assets/logos/fleu.svg">
+      <div class="approach-lines reveal">
+        <div>Visual Direction</div>
+        <div>Digital Campaigns</div>
+        <div>Social Media</div>
+        <div>Email Marketing</div>
+      </div>
+    </section>
+
+    <section class="category" id="fleu-ai"
+      data-eyebrow="AI IMAGERY — FLÉU" data-heading="AI Imagery"
+      data-body=""
+      data-logo="assets/logos/fleu.svg">
+      <div class="gallery">
+        <div class="img-card reveal"><img src="assets/fleu/ai-4.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/ai-5.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/ai-6.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/ai-7.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/ai-8.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/ai-9.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/ai-10.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/ai-11.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/ai-12.jpg" loading="lazy" alt=""></div>
+      </div>
+
+      <div class="athens-block" style="margin-top:20vh;"
+        data-eyebrow="REELS — FLÉU" data-heading="Reels"
+        data-body="" data-logo="assets/logos/fleu.svg">
+        <div class="row-3">
+          <div class="vid-card reveal"><video src="assets/fleu/video/reel-1.mp4" poster="assets/fleu/video/posters/reel-1.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+          <div class="vid-card reveal"><video src="assets/fleu/video/reel-2.mp4" poster="assets/fleu/video/posters/reel-2.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+          <div class="vid-card reveal"><video src="assets/fleu/video/reel-3.mp4" poster="assets/fleu/video/posters/reel-3.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category" id="fleu-stories"
+      data-eyebrow="STORIES — FLÉU" data-heading="Stories"
+      data-body=""
+      data-logo="assets/logos/fleu.svg">
+      <div class="story-row">
+        <div class="vid-card reveal"><video src="assets/fleu/video/story-1.mp4" poster="assets/fleu/video/posters/story-1.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="img-card reveal"><img src="assets/fleu/story-2.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/story-3.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/story-4.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/story-5.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/story-6.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/fleu/story-7.jpg" loading="lazy" alt=""></div>
+        <div class="vid-card reveal"><video src="assets/fleu/video/story-8.mp4" poster="assets/fleu/video/posters/story-8.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="img-card reveal"><img src="assets/fleu/story-9.jpg" loading="lazy" alt=""></div>
+      </div>
+    </section>
+
+    <section class="category" id="fleu-mailing"
+      data-eyebrow="MAILING — FLÉU" data-heading="E-mail Marketing"
+      data-body=""
+      data-logo="assets/logos/fleu.svg">
+      <div class="solo-row">
+        <div class="solo-item"><div class="img-card reveal"><img src="assets/fleu/mail-1.jpg" loading="lazy" alt=""></div></div>
+        <div class="solo-item"><div class="img-card reveal"><img src="assets/fleu/mail-2.gif" loading="lazy" alt=""></div></div>
+      </div>
+    </section>
+
+    <section class="category" id="fleu-website"
+      data-eyebrow="WEBSITE — FLÉU" data-heading="Website"
+      data-body="Traffic was reaching the website, but visitors were not converting into customers."
+      data-logo="assets/logos/fleu.svg">
+      <div style="padding-top:4vh; border-top:1px solid var(--line);">
+        <div style="font-size:0.72rem; letter-spacing:0.14em; color:var(--ink-faint); margin-bottom:1.4em;">CHALLENGE 01</div>
+        <p style="font-size:0.85rem; line-height:1.75; color:var(--ink-soft); max-width:82ch; font-weight:300; margin:0;">Traffic was reaching the website, but visitors were not converting into customers.</p>
+
+        <div style="font-size:0.72rem; letter-spacing:0.14em; color:var(--ink-faint); margin:3.4em 0 1.4em;">SOLUTION</div>
+        <ul style="font-size:0.85rem; line-height:2.1; color:var(--ink-soft); max-width:82ch; font-weight:300; margin:0; padding-left:1.2em;">
+          <li>Redesigned and rebuilt the Shopify website</li>
+          <li>Introduced AI-generated campaign imagery</li>
+          <li>Added influencer content as social proof</li>
+          <li>Showed the complete packaging experience</li>
+          <li>Featured press coverage to strengthen authority</li>
+        </ul>
+
+        <div style="font-size:0.72rem; letter-spacing:0.14em; color:var(--ink-faint); margin:3.4em 0 1.4em;">RESULT</div>
+        <div class="stats-row reveal">
+          <div class="stat"><div class="stat-num">+30%</div><div class="stat-label">Conversion Rate Following The Website Redesign</div></div>
+        </div>
+
+        <div style="margin-top:8vh;" class="laptop-mockup reveal">
+          <img src="assets/fleu/laptop-mockup.png" loading="lazy" alt="">
+        </div>
+      </div>
+    </section>
+
+    <section class="category" id="fleu-ads"
+      data-eyebrow="META ADS — FLÉU" data-heading="Meta Ads"
+      data-body="All the brands I work with collaborate with external digital marketing agencies. I work directly with these teams, translating brand strategy into campaign assets and using performance insights to improve the next creative decisions."
+      data-logo="assets/logos/fleu.svg">
+      <div style="padding-top:4vh; border-top:1px solid var(--line);">
+        <div style="font-size:0.72rem; letter-spacing:0.14em; color:var(--ink-faint); margin-bottom:1.4em;">CHALLENGE 02</div>
+        <p style="font-size:0.85rem; line-height:1.75; color:var(--ink-soft); max-width:82ch; font-weight:300; margin:0;">Paid campaigns lacked transparency, structured creative testing and continuous optimisation.</p>
+
+        <div style="font-size:0.72rem; letter-spacing:0.14em; color:var(--ink-faint); margin:3.4em 0 1.4em;">NEW APPROACH</div>
+        <ul style="font-size:0.85rem; line-height:2.1; color:var(--ink-soft); max-width:82ch; font-weight:300; margin:0; padding-left:1.2em;">
+          <li>Developed a new Meta Ads plan with AI-supported research and analysis</li>
+          <li>Produced 20–30 creative variations for structured testing</li>
+          <li>Used Meta's delivery system to identify the strongest-performing combinations</li>
+          <li>Continued developing new content based on real performance data</li>
+        </ul>
+
+        <div class="athens-block"
+          data-eyebrow="RESULTS — FLÉU" data-heading="An Overlooked Product"
+          data-body="Structured creative testing identified an overlooked colour variation as the strongest-performing campaign asset." data-logo="assets/logos/fleu.svg"
+          data-stats="15+|Handbags Sold From A Colour That Had Previously Generated Almost No Sales">
+          <div style="font-family:'IM Fell French Canon',serif; font-style:italic; font-size:clamp(1.25rem,2vw,1.6rem); margin-bottom:1.2em;">An Overlooked Product Became a Best Performer</div>
+          <p style="font-size:0.85rem; line-height:1.75; color:var(--ink-soft); max-width:82ch; font-weight:300; margin:0 0 2em;">Structured creative testing identified an overlooked colour variation as the strongest-performing campaign asset.</p>
+          <div class="img-card reveal" style="max-width:420px;"><img src="assets/fleu/ai-9.jpg" loading="lazy" alt=""></div>
+        </div>
+
+        <div class="athens-block"
+          data-eyebrow="META ADS — FLÉU" data-heading="One Product. Three Motivations."
+          data-body="We split the audience by motivation instead of treating everyone the same." data-logo="assets/logos/fleu.svg">
+          <div style="font-family:'IM Fell French Canon',serif; font-style:italic; font-size:clamp(1.25rem,2vw,1.6rem); margin-bottom:1.6em;">One Product. Three Motivations.</div>
+          <div class="motivation-grid">
+            <div class="motivation-item reveal">
+              <div class="motivation-name">Fashion-led customers</div>
+              <div class="motivation-desc">Content focused on styling and visual desirability</div>
+            </div>
+            <div class="motivation-item reveal">
+              <div class="motivation-name">Craft-led customers</div>
+              <div class="motivation-desc">Content focused on materials and handmade production</div>
+            </div>
+            <div class="motivation-item reveal">
+              <div class="motivation-name">Need-led customers</div>
+              <div class="motivation-desc">Content focused on function, versatility and everyday use</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:6vh;">
+          <div class="ads-set-label">Set 01 — Stories · Feed · Wide</div>
+          <div class="ads-set">
+            <div class="img-card reveal"><img src="assets/fleu/ads-set1-vertical.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set1-feed.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set1-wide.jpg" loading="lazy" alt=""></div>
+          </div>
+          <div class="ads-set-label">Set 02</div>
+          <div class="ads-set">
+            <div class="img-card reveal"><img src="assets/fleu/ads-set2-vertical.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set2-feed.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set2-wide.jpg" loading="lazy" alt=""></div>
+          </div>
+          <div class="ads-set-label">Set 03</div>
+          <div class="ads-set">
+            <div class="img-card reveal"><img src="assets/fleu/ads-set3-vertical.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set3-feed.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set3-wide.jpg" loading="lazy" alt=""></div>
+          </div>
+          <div class="ads-set-label">Set 04</div>
+          <div class="ads-set">
+            <div class="img-card reveal"><img src="assets/fleu/ads-set4-vertical.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set4-feed.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set4-wide.jpg" loading="lazy" alt=""></div>
+          </div>
+          <div class="ads-set-label">Set 05</div>
+          <div class="ads-set">
+            <div class="img-card reveal"><img src="assets/fleu/ads-set5-vertical.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set5-feed.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set5-wide.jpg" loading="lazy" alt=""></div>
+          </div>
+          <div class="ads-set-label">Set 06</div>
+          <div class="ads-set">
+            <div class="img-card reveal"><img src="assets/fleu/ads-set6-vertical.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set6-feed.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set6-wide.jpg" loading="lazy" alt=""></div>
+          </div>
+          <div class="ads-set-label">Set 07</div>
+          <div class="ads-set" style="margin-bottom:0;">
+            <div class="img-card reveal"><img src="assets/fleu/ads-set7-vertical.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set7-feed.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-set7-wide.jpg" loading="lazy" alt=""></div>
+          </div>
+        </div>
+
+        <div class="athens-block"
+          data-eyebrow="CAROUSEL — FLÉU" data-heading="Carousel"
+          data-body="" data-logo="assets/logos/fleu.svg">
+          <div class="carousel">
+            <div class="img-card reveal"><img src="assets/fleu/ads-carousel-1.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-carousel-2.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-carousel-3.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-carousel-4.jpg" loading="lazy" alt=""></div>
+            <div class="img-card reveal"><img src="assets/fleu/ads-carousel-5.jpg" loading="lazy" alt=""></div>
+          </div>
+          <div class="carousel-dots"></div>
+        </div>
+
+        <div class="row-2" style="margin-top:9vh;">
+          <div class="vid-card reveal"><video src="assets/fleu/video/ads-duo-1.mp4" poster="assets/fleu/video/posters/ads-duo-1.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+          <div class="vid-card reveal"><video src="assets/fleu/video/ads-duo-2.mp4" poster="assets/fleu/video/posters/ads-duo-2.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        </div>
+
+        <div class="athens-block" style="margin-top:16vh;"
+          data-eyebrow="RESULTS — FLÉU" data-heading="Early Results"
+          data-body="The strategy remains active and continues to generate positive results." data-logo="assets/logos/fleu.svg"
+          data-stats="500K|Campaign Views;1,500|New Followers;30%|Sales Increase">
+          <div style="font-family:'IM Fell French Canon',serif; font-style:italic; font-size:clamp(1.25rem,2vw,1.6rem); margin-bottom:0.8em;">Early Results</div>
+          <p style="font-size:0.85rem; line-height:1.75; color:var(--ink-soft); max-width:82ch; font-weight:300; margin:0;">The strategy remains active and continues to generate positive results.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ATTIRE ===================== -->
+    <section class="hero-stage chapter-divider" id="attire-divider"
+      data-eyebrow="CLIENT — ATTIRE" data-heading="Attire The Studio"
+      data-body="A European fashion brand founded by Xenia Adonts, built around sustainability, transparency and intentional production. The collections are made in Italy and Portugal using carefully selected materials and a reduced supply chain."
+      data-logo="assets/logos/attire.svg">
+      <div class="divider-logo"><img src="assets/logos/attire.svg" alt="Attire"></div>
+    </section>
+
+    <section class="client-intro follow" id="attire-intro"
+      data-eyebrow="CLIENT — ATTIRE" data-heading="Attire The Studio"
+      data-body="A European fashion brand founded by Xenia Adonts, built around sustainability, transparency and intentional production. The collections are made in Italy and Portugal using carefully selected materials and a reduced supply chain."
+      data-logo="assets/logos/attire.svg">
+      <div class="img-card reveal"><img src="assets/attire/feed-1.jpg" loading="lazy" alt=""></div>
+    </section>
+
+    <section class="category" id="attire-role"
+      data-eyebrow="MY ROLE — ATTIRE" data-heading="My Role"
+      data-body=""
+      data-logo="assets/logos/attire.svg">
+      <div class="approach-lines reveal">
+        <div>Visual Direction</div>
+        <div>Digital Campaigns</div>
+        <div>Social Media</div>
+        <div>Email Marketing</div>
+      </div>
+    </section>
+
+    <section class="category" id="attire-feed"
+      data-eyebrow="IG FEED — ATTIRE" data-heading="IG Feed"
+      data-body=""
+      data-logo="assets/logos/attire.svg">
+      <div class="row-3">
+        <div class="img-card reveal"><img src="assets/attire/feed-1.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-2.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-3.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-4.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-5.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-6.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-7.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-8.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-9.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-10.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-11.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-12.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-13.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-14.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/feed-15.jpg" loading="lazy" alt=""></div>
+      </div>
+    </section>
+
+    <section class="category" id="attire-stories"
+      data-eyebrow="STORIES — ATTIRE" data-heading="Quiet Communication"
+      data-body="ATTIRE's priority was not aggressive promotion, but building a distinctive and consistent visual world around quality, sustainability and transparency. No constant discounts. No loud sales language. No unnecessary visual noise. The products were communicated through restraint, clarity and long-term brand value."
+      data-logo="assets/logos/attire.svg">
+      <div class="row-3">
+        <div class="img-card reveal"><img src="assets/attire/story-1.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/story-2.jpg" loading="lazy" alt=""></div>
+        <div class="vid-card reveal"><video src="assets/attire/video/story-3.mp4" poster="assets/attire/video/posters/story-3.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="img-card reveal"><img src="assets/attire/story-4.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/story-5.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/story-6.jpg" loading="lazy" alt=""></div>
+        <div class="vid-card reveal"><video src="assets/attire/video/story-7.mp4" poster="assets/attire/video/posters/story-7.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="img-card reveal"><img src="assets/attire/story-8.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/story-9.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/story-10.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/story-11.jpg" loading="lazy" alt=""></div>
+        <div class="vid-card reveal"><video src="assets/attire/video/story-12.mp4" poster="assets/attire/video/posters/story-12.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video></div>
+        <div class="img-card reveal"><img src="assets/attire/story-13.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/story-14.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/story-15.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/story-16.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/story-17.jpg" loading="lazy" alt=""></div>
+        <div class="img-card reveal"><img src="assets/attire/story-18.jpg" loading="lazy" alt=""></div>
+      </div>
+    </section>
+
+    <section class="category" id="attire-mailing"
+      data-eyebrow="MAILING — ATTIRE" data-heading="E-mail Marketing"
+      data-body=""
+      data-logo="assets/logos/attire.svg">
+      <div class="solo-row">
+        <div class="solo-item"><div class="img-card reveal"><img src="assets/attire/mail-1.jpg" loading="lazy" alt=""></div></div>
+        <div class="solo-item"><div class="img-card reveal"><img src="assets/attire/mail-2.gif" loading="lazy" alt=""></div></div>
+        <div class="solo-item"><div class="img-card reveal"><img src="assets/attire/mail-3.jpg" loading="lazy" alt=""></div></div>
+      </div>
+    </section>
+
+    <!-- ===================== THANK YOU ===================== -->
+    <section class="hero-stage chapter-divider" id="thankyou-divider"
+      data-eyebrow="THANK YOU" data-heading="Thank You"
+      data-body="">
+      <div class="hero-word">Thank You!</div>
+    </section>
+
+  </main>
+
+<script>
+  (function(){
+    var leftPanel = document.getElementById('leftPanel');
+    var sections = Array.prototype.slice.call(document.querySelectorAll('[data-eyebrow]'));
+    var heroSection = document.querySelector('.hero-stage');
+    var dynInner = document.getElementById('dynamicInner');
+    var dynEyebrow = document.getElementById('dynEyebrow');
+    var dynHeading = document.getElementById('dynHeading');
+    var dynSub = document.getElementById('dynSub');
+    var dynStats = document.getElementById('dynStats');
+    var idxItems = Array.prototype.slice.call(document.querySelectorAll('.idx-item'));
+    var current = null, pending = null;
+
+    var chapterMap = {
+      'about-divider':'about-edu', 'about-edu':'about-edu', 'about-works':'about-edu', 'about-inspire':'about-edu',
+      'moeva-divider':'moeva-intro', 'moeva-intro':'moeva-intro', 'moeva-role':'moeva-intro', 'digital-reach':'moeva-intro', 'moeva-locations':'moeva-intro', 'moeva-website':'moeva-intro', 'stories':'moeva-intro', 'igfeed':'moeva-intro', 'mailing':'moeva-intro', 'campaigns':'moeva-intro', 'aiimagery':'moeva-intro', 'ss27':'moeva-intro',
+      'lilyrose-divider':'lilyrose-intro', 'lilyrose-intro':'lilyrose-intro', 'lilyrose-role':'lilyrose-intro', 'lr-mailing':'lilyrose-intro', 'lr-stories':'lilyrose-intro', 'lr-ai':'lilyrose-intro',
+      'fleu-divider':'fleu-intro', 'fleu-intro':'fleu-intro', 'fleu-role':'fleu-intro', 'fleu-ai':'fleu-intro', 'fleu-stories':'fleu-intro', 'fleu-mailing':'fleu-intro', 'fleu-website':'fleu-intro', 'fleu-ads':'fleu-intro',
+      'attire-divider':'attire-intro', 'attire-intro':'attire-intro', 'attire-role':'attire-intro', 'attire-feed':'attire-intro', 'attire-stories':'attire-intro', 'attire-mailing':'attire-intro',
+      'thankyou-divider':'thankyou'
+    };
+    var clientIndexMap = { 'moeva-intro':'01', 'lilyrose-intro':'02', 'fleu-intro':'03', 'attire-intro':'04' };
+    var dynIndex = document.getElementById('dynIndex');
+
+    function resolveChapter(el0){
+      var node = el0;
+      while(node){
+        if(node.id && chapterMap[node.id]){ return chapterMap[node.id]; }
+        node = node.parentElement;
+      }
+      return null;
+    }
+
+    function setActiveNav(el0){
+      var chapter = resolveChapter(el0);
+      if(!chapter) return;
+      idxItems.forEach(function(el){ el.classList.toggle('active', el.getAttribute('data-target') === chapter); });
+    }
+
+    function renderStats(str){
+      dynStats.innerHTML = '';
+      if(!str){ dynStats.style.display = 'none'; return; }
+      var groups = str.split(';');
+      groups.forEach(function(g){
+        var parts = g.split('|');
+        var st = document.createElement('div');
+        st.className = 'st';
+        st.innerHTML = '<div class="st-num">'+parts[0]+'</div><div class="st-label">'+parts[1]+'</div>';
+        dynStats.appendChild(st);
+      });
+      dynStats.style.display = 'flex';
+    }
+
+    function activate(section){
+      if(section === current) return;
+      current = section; pending = section;
+      dynInner.classList.add('fading');
+      setTimeout(function(){
+        if(pending !== section) return;
+        dynEyebrow.textContent = section.getAttribute('data-eyebrow');
+        dynHeading.textContent = section.getAttribute('data-heading');
+        var subStr = section.getAttribute('data-sub');
+        if(subStr){ dynSub.textContent = subStr; dynSub.style.display = 'block'; } else { dynSub.style.display = 'none'; }
+        var statsStr = section.getAttribute('data-stats');
+        renderStats(statsStr);
+        var chapterKey = resolveChapter(section);
+        if(statsStr && clientIndexMap[chapterKey]){
+          dynIndex.textContent = clientIndexMap[chapterKey];
+          dynIndex.style.display = 'block';
+        } else {
+          dynIndex.style.display = 'none';
+        }
+        setActiveNav(section);
+        dynInner.classList.remove('fading');
+      }, 260);
+    }
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ if(entry.isIntersecting){ activate(entry.target); } });
+    }, { rootMargin: '-42% 0px -42% 0px', threshold: 0 });
+    sections.forEach(function(s){ io.observe(s); });
+
+    var heroIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ leftPanel.classList.toggle('at-hero', entry.isIntersecting); });
+    }, { threshold: 0.4 });
+    if(heroSection){ heroIo.observe(heroSection); }
+
+    // All chapter dividers hide the small dynamic text (the big right-side word takes over).
+    var dividerSections = Array.prototype.slice.call(document.querySelectorAll('.chapter-divider'));
+    var activeDividers = 0;
+    var dividerIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ activeDividers++; } else { activeDividers = Math.max(0, activeDividers - 1); }
+      });
+      leftPanel.classList.toggle('at-divider', activeDividers > 0);
+    }, { threshold: 0.4 });
+    dividerSections.forEach(function(s){ dividerIo.observe(s); });
+
+    var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+    var foldY = window.scrollY + window.innerHeight;
+    reveals.forEach(function(el){
+      var top = el.getBoundingClientRect().top + window.scrollY;
+      if(top > foldY - 40){ el.classList.add('js-hidden'); }
+    });
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.remove('js-hidden'); entry.target.classList.add('in-view'); ro.unobserve(entry.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+    reveals.forEach(function(el){ ro.observe(el); });
+    setTimeout(function(){ reveals.forEach(function(el){ el.classList.remove('js-hidden'); el.classList.add('in-view'); }); }, 1500);
+
+    // No native `autoplay` attribute on purpose: with 25 videos on the page, Safari
+    // (especially opened straight from file://) chokes if all of them try to
+    // autoplay/preload at once and ends up playing none. Instead each video is
+    // played individually, one at a time, only once it scrolls near the viewport —
+    // muted playback doesn't need a user gesture, so this works in every browser.
+    var videos = Array.prototype.slice.call(document.querySelectorAll('video'));
+    var vio = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.play().catch(function(){}); } else { entry.target.pause(); }
+      });
+    }, { threshold: 0.01, rootMargin: '300px 0px' });
+    videos.forEach(function(v){ vio.observe(v); });
+
+    idxItems.forEach(function(el){
+      el.addEventListener('click', function(){
+        var target = document.getElementById(el.getAttribute('data-target'));
+        if(target){ target.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+    // Carousel — scroll-snap driven, with click-through dot indicators kept in sync
+    Array.prototype.slice.call(document.querySelectorAll('.carousel')).forEach(function(car){
+      var dotsWrap = car.nextElementSibling;
+      if(!dotsWrap || !dotsWrap.classList.contains('carousel-dots')) return;
+      var items = Array.prototype.slice.call(car.children);
+      items.forEach(function(_, i){
+        var dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', function(){ items[i].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' }); });
+        dotsWrap.appendChild(dot);
+      });
+      var dots = Array.prototype.slice.call(dotsWrap.children);
+      var tick = false;
+      car.addEventListener('scroll', function(){
+        if(tick) return;
+        tick = true;
+        requestAnimationFrame(function(){
+          var center = car.scrollLeft + car.clientWidth / 2;
+          var closest = 0, closestDist = Infinity;
+          items.forEach(function(it, i){
+            var dist = Math.abs((it.offsetLeft + it.offsetWidth / 2) - center);
+            if(dist < closestDist){ closestDist = dist; closest = i; }
+          });
+          dots.forEach(function(d, i){ d.classList.toggle('active', i === closest); });
+          tick = false;
+        });
+      }, { passive: true });
+    });
+  })();
+</script>
+
+  </div>
+
+<script>
+  (function(){
+    var CORRECT_HASH = '158a323a7ba44870f23d96f1516dd70aa48e9a72db4ebb026b0a89e212a208ab';
+    var gate = document.getElementById('gate');
+    var content = document.getElementById('siteContent');
+    var form = document.getElementById('gateForm');
+    var input = document.getElementById('gatePassword');
+    var err = document.getElementById('gateErr');
+
+    function sha256(str){
+      var data = new TextEncoder().encode(str);
+      return crypto.subtle.digest('SHA-256', data).then(function(buf){
+        return Array.prototype.map.call(new Uint8Array(buf), function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+      });
+    }
+    function unlock(){
+      gate.classList.add('unlocked');
+      content.classList.remove('hidden');
+      try{ localStorage.setItem('mm-unlocked', '1'); }catch(e){}
+    }
+    if(localStorage.getItem('mm-unlocked') === '1'){ unlock(); }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      sha256(input.value).then(function(hash){
+        if(hash === CORRECT_HASH){ unlock(); }
+        else { err.classList.add('show'); input.value=''; }
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
