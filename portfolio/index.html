@@ -54,12 +54,18 @@
   }
   .filter-menu.visible{ opacity: 1; pointer-events: auto; }
   .filter-menu .f-item{
-    display: flex; align-items: baseline; gap: 0.7em; cursor: pointer;
+    display: flex; align-items: baseline; gap: 0.55em; cursor: pointer;
     color: #fff; pointer-events: auto;
   }
+  .filter-menu .f-marker{
+    width: 0.9em; height: 1px; background: #fff;
+    transform: scaleX(0); transform-origin: right center;
+    transition: transform 0.4s cubic-bezier(.22,.61,.36,1);
+  }
+  .filter-menu .f-item.active .f-marker{ transform: scaleX(1); }
   .filter-menu .f-num{ font-size: 0.68rem; letter-spacing: 0.06em; }
-  .filter-menu .f-name{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 0.95rem; }
-  .filter-menu .f-item.active .f-name{ text-decoration: underline; text-underline-offset: 3px; }
+  .filter-menu .f-name{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 0.95rem; transition: transform 0.4s cubic-bezier(.22,.61,.36,1); display: inline-block; }
+  .filter-menu .f-item.active .f-name{ transform: scale(1.1); transform-origin: right center; }
 
   /* Project title/subtitle overlay — fixed top-left, difference-blended, shown only during a project's full-bleed gallery */
   .overlay-title{
@@ -70,6 +76,21 @@
   .overlay-title.visible{ opacity: 1; }
   .overlay-title .o-name{ font-size: 0.76rem; letter-spacing: 0.14em; }
   .overlay-title .o-sub{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.05rem; margin-top: 0.2em; }
+
+  /* Custom cursor — a soft dot that tints toward each project's colour as you scroll through it */
+  @media (hover: hover) and (pointer: fine){
+    body{ cursor: none; }
+    a, .f-item, .seg-item{ cursor: none; }
+  }
+  .cursor-dot{
+    position: fixed; top: 0; left: 0; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--ink); opacity: 0.16;
+    transform: translate(-50%, -50%);
+    pointer-events: none; z-index: 60;
+    transition: background 0.7s ease, opacity 0.4s ease, width 0.3s ease, height 0.3s ease;
+    will-change: transform;
+  }
+  .cursor-dot.on-link{ width: 34px; height: 34px; opacity: 0.22; }
 
   /* ---------- Landing hero ---------- */
   .landing{ height: 100vh; position: relative; display: flex; }
@@ -136,13 +157,15 @@
 </head>
 <body>
 
+  <div class="cursor-dot" id="cursorDot"></div>
+
   <div class="about-corner">About Me</div>
 
   <nav class="filter-menu" id="filterMenu">
-    <div class="f-item active" data-filter="all"><span class="f-num">04</span><span class="f-name">See All My Works</span></div>
-    <div class="f-item" data-filter="digital"><span class="f-num">03</span><span class="f-name">Digital Works &amp; Social Media</span></div>
-    <div class="f-item" data-filter="illustration"><span class="f-num">02</span><span class="f-name">Illustrations &amp; Animation</span></div>
-    <div class="f-item" data-filter="branding"><span class="f-num">01</span><span class="f-name">Branding &amp; Visual Identity</span></div>
+    <div class="f-item" data-filter="branding"><span class="f-marker"></span><span class="f-num">01</span><span class="f-name">Branding &amp; Visual Identity</span></div>
+    <div class="f-item" data-filter="illustration"><span class="f-marker"></span><span class="f-num">02</span><span class="f-name">Illustrations &amp; Animation</span></div>
+    <div class="f-item" data-filter="digital"><span class="f-marker"></span><span class="f-num">03</span><span class="f-name">Digital Works &amp; Social Media</span></div>
+    <div class="f-item active" data-filter="all"><span class="f-marker"></span><span class="f-num">04</span><span class="f-name">See All My Works</span></div>
   </nav>
 
   <div class="overlay-title" id="overlayTitle">
@@ -175,7 +198,7 @@
     </section>
 
     <!-- ===================== BERA DESIGN ===================== -->
-    <div class="project" id="project-bera" data-category="branding" data-name="BERA DESIGN" data-sub="Re-Branding Project">
+    <div class="project" id="project-bera" data-category="branding" data-name="BERA DESIGN" data-sub="Re-Branding Project" data-color="#a85a3c">
 
       <section class="project-entrance">
         <div class="entrance-left">
@@ -254,34 +277,56 @@
     var overlayName = document.getElementById('overlayName');
     var overlaySub = document.getElementById('overlaySub');
     var filterMenu = document.getElementById('filterMenu');
+    var cursorDot = document.getElementById('cursorDot');
+
+    // Custom cursor: follows the pointer, grows slightly over clickable elements.
+    window.addEventListener('mousemove', function(e){
+      cursorDot.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px) translate(-50%,-50%)';
+    }, { passive: true });
+    Array.prototype.slice.call(document.querySelectorAll('a, .f-item, .seg-item')).forEach(function(el){
+      el.addEventListener('mouseenter', function(){ cursorDot.classList.add('on-link'); });
+      el.addEventListener('mouseleave', function(){ cursorDot.classList.remove('on-link'); });
+    });
 
     // The bottom-right filter menu only appears once you've scrolled past the landing hero
     // (the landing screen already shows its own centered version of this list).
     var landingIo = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){ filterMenu.classList.toggle('visible', !entry.isIntersecting); });
+      entries.forEach(function(entry){
+        filterMenu.classList.toggle('visible', !entry.isIntersecting);
+        if(entry.isIntersecting){ cursorDot.style.background = 'var(--ink)'; }
+      });
     }, { threshold: 0.3 });
     var landingEl = document.querySelector('.landing');
     if(landingEl){ landingIo.observe(landingEl); }
 
-    // Overlay title: visible + populated while a project's GALLERY (not its entrance) is in view.
+    // Overlay title + cursor colour: driven by the same, smaller elements (gallery pairs and the
+    // entrance block) rather than the whole (very tall) project container — observing an element
+    // so large that the viewport ends up fully inside it doesn't fire reliably in every browser.
     projects.forEach(function(proj){
       var entrance = proj.querySelector('.project-entrance');
+      var color = proj.getAttribute('data-color');
+
       var io = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
           if(entry.isIntersecting){
             overlayName.textContent = proj.getAttribute('data-name');
             overlaySub.textContent = proj.getAttribute('data-sub');
             overlayTitle.classList.add('visible');
+            if(color){ cursorDot.style.background = color; }
           }
         });
       }, { threshold: 0 });
       // Watch every gallery pair inside this project (not the entrance).
       Array.prototype.slice.call(proj.querySelectorAll('.gallery-pair, .gallery-single')).forEach(function(g){ io.observe(g); });
 
-      // Hide overlay while the entrance itself is on screen (inline text already shows it there).
+      // Hide overlay while the entrance itself is on screen (inline text already shows it there),
+      // but still tint the cursor — you're inside this project either way.
       var entranceIo = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
-          if(entry.isIntersecting){ overlayTitle.classList.remove('visible'); }
+          if(entry.isIntersecting){
+            overlayTitle.classList.remove('visible');
+            if(color){ cursorDot.style.background = color; }
+          }
         });
       }, { threshold: 0.6 });
       if(entrance){ entranceIo.observe(entrance); }
