@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/portfolio/">
+<title>Elif Tataroğlu — Portfolio</title>
+
+<style>
+  @font-face {
+    font-family: 'ABC Favorit Mono Light';
+    src: url('assets/fonts/ABCFavoritMonoUnlicensedTrial-Light.otf') format('opentype');
+    font-weight: 300; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'ABC Favorit Mono';
+    src: url('assets/fonts/ABCFavoritMonoVariableUnlicensedTrial-Regular.ttf') format('truetype');
+    font-weight: 100 800; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'IM Fell French Canon';
+    src: url('assets/fonts/IM_FELL_French_Canon_Italic.ttf') format('truetype');
+    font-weight: 400; font-style: italic; font-display: swap;
+  }
+
+  :root{
+    --bg: #f7f6f2;
+    --ink: #1a170f;
+    --ink-soft: rgba(26,23,15,0.56);
+    --ink-faint: rgba(26,23,15,0.34);
+    --line: rgba(26,23,15,0.15);
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: 'ABC Favorit Mono Light', 'ABC Favorit Mono', monospace;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img, video{ max-width: 100%; display: block; }
+
+  /* ---------- Persistent fixed overlay: About Me + filter menu, always difference-blended ---------- */
+  .about-corner{
+    position: fixed; top: 3.6vh; right: 4vw; z-index: 40;
+    font-size: 0.72rem; letter-spacing: 0.16em; color: #fff;
+    mix-blend-mode: difference; pointer-events: none;
+  }
+  .filter-menu{
+    position: fixed; right: 4vw; bottom: 4vh; z-index: 40;
+    display: flex; flex-direction: column; gap: 0.9em; align-items: flex-end;
+    mix-blend-mode: difference;
+    opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+  }
+  .filter-menu.visible{ opacity: 1; pointer-events: auto; }
+  .filter-menu .f-item{
+    display: flex; align-items: baseline; gap: 0.7em; cursor: pointer;
+    color: #fff; pointer-events: auto;
+  }
+  .filter-menu .f-num{ font-size: 0.68rem; letter-spacing: 0.06em; }
+  .filter-menu .f-name{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 0.95rem; }
+  .filter-menu .f-item.active .f-name{ text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Project title/subtitle overlay — fixed top-left, difference-blended, shown only during a project's full-bleed gallery */
+  .overlay-title{
+    position: fixed; top: 3.6vh; left: 4vw; z-index: 40;
+    color: #fff; mix-blend-mode: difference; pointer-events: none;
+    opacity: 0; transition: opacity 0.5s ease;
+  }
+  .overlay-title.visible{ opacity: 1; }
+  .overlay-title .o-name{ font-size: 0.76rem; letter-spacing: 0.14em; }
+  .overlay-title .o-sub{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.05rem; margin-top: 0.2em; }
+
+  /* ---------- Landing hero ---------- */
+  .landing{ height: 100vh; position: relative; display: flex; }
+  .landing-split{ position: absolute; top: 0; bottom: 0; left: 40%; width: 1px; background: var(--line); }
+  .landing-left{ width: 40%; position: relative; }
+  .landing-right{ width: 60%; position: relative; }
+
+  .landing-name{ position: absolute; left: 4vw; top: 50%; transform: translateY(-50%); }
+  .landing-name .n-name{ font-size: 0.76rem; letter-spacing: 0.14em; }
+  .landing-name .n-title{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.05rem; color: var(--ink); margin-top: 0.2em; }
+
+  .landing-scroll{
+    position: absolute; left: 4vw; bottom: 3.6vh;
+    font-size: 0.72rem; letter-spacing: 0.14em;
+    animation: scrollBounce 1.8s ease-in-out infinite;
+  }
+  @keyframes scrollBounce{
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(8px); opacity: 0.5; }
+  }
+
+  .landing-heading{ position: absolute; left: 4vw; top: 50%; transform: translateY(-50%); }
+  .landing-heading .l-word{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: clamp(1.6rem,2.4vw,2.1rem); margin-bottom: 1.6em; }
+  .landing-segments{ display: flex; flex-direction: column; gap: 1.5em; }
+  .landing-segments .seg-item{ display: flex; align-items: baseline; gap: 0.9em; cursor: pointer; }
+  .landing-segments .seg-num{ font-size: 0.7rem; letter-spacing: 0.06em; color: var(--ink-faint); }
+  .landing-segments .seg-name{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: clamp(1.05rem,1.4vw,1.25rem); transition: color 0.3s ease; }
+  .landing-segments .seg-item:hover .seg-name{ color: var(--ink-soft); }
+
+  /* ---------- Project entrance (credits moment) ---------- */
+  .project-entrance{ display: flex; min-height: 100vh; border-top: 1px solid var(--line); }
+  .entrance-left{ width: 40%; position: relative; padding: 8vh 4vw; display: flex; flex-direction: column; }
+  .entrance-right{ width: 60%; }
+  .entrance-right img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .entrance-title{ font-size: 0.82rem; letter-spacing: 0.06em; }
+  .entrance-subtitle{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.15rem; color: var(--ink); margin-top: 0.2em; }
+  .entrance-desc{ font-size: 0.82rem; line-height: 1.7; color: var(--ink-soft); font-weight: 300; max-width: 42ch; margin-top: 3.5em; }
+
+  .entrance-credits{ margin-top: auto; }
+  .entrance-credits div{ font-size: 0.68rem; letter-spacing: 0.05em; color: var(--ink); line-height: 1.9; }
+  .entrance-credits .cred-num{ margin-top: 1.6em; color: var(--ink-faint); }
+
+  /* ---------- Full-bleed gallery ---------- */
+  .gallery-pair{ display: grid; grid-template-columns: 1fr 1fr; }
+  .gallery-single{ width: 100%; }
+  .gallery-pair img, .gallery-single img{ width: 100%; height: auto; display: block; }
+  .gallery-caption{ font-size: 0.66rem; letter-spacing: 0.06em; color: var(--ink-faint); text-transform: uppercase; padding: 1.2em 1.5em 0; }
+
+  footer.end{ padding: 10vh 4vw 18vh; border-top: 1px solid var(--line); font-size: 0.7rem; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; }
+
+  @media (max-width: 880px){
+    .landing{ flex-direction: column; height: auto; min-height: 100vh; }
+    .landing-split{ display: none; }
+    .landing-left, .landing-right{ width: 100%; position: relative; padding: 4vh 6vw; }
+    .landing-name, .landing-heading{ position: relative; top: 0; left: 0; transform: none; }
+    .landing-scroll{ position: relative; left: 0; bottom: 0; margin-top: 6vh; padding: 0 6vw; }
+    .project-entrance{ flex-direction: column; }
+    .entrance-left, .entrance-right{ width: 100%; }
+    .gallery-pair{ grid-template-columns: 1fr; }
+    .about-corner{ display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="about-corner">About Me</div>
+
+  <nav class="filter-menu" id="filterMenu">
+    <div class="f-item active" data-filter="all"><span class="f-num">04</span><span class="f-name">See All My Works</span></div>
+    <div class="f-item" data-filter="digital"><span class="f-num">03</span><span class="f-name">Digital Works &amp; Social Media</span></div>
+    <div class="f-item" data-filter="illustration"><span class="f-num">02</span><span class="f-name">Illustrations &amp; Animation</span></div>
+    <div class="f-item" data-filter="branding"><span class="f-num">01</span><span class="f-name">Branding &amp; Visual Identity</span></div>
+  </nav>
+
+  <div class="overlay-title" id="overlayTitle">
+    <div class="o-name" id="overlayName"></div>
+    <div class="o-sub" id="overlaySub"></div>
+  </div>
+
+  <main>
+
+    <section class="landing">
+      <div class="landing-split"></div>
+      <div class="landing-left">
+        <div class="landing-name">
+          <div class="n-name">ELİF TATAROĞLU</div>
+          <div class="n-title">Visual Designer</div>
+        </div>
+        <div class="landing-scroll">Scroll</div>
+      </div>
+      <div class="landing-right">
+        <div class="landing-heading">
+          <div class="l-word">Portfolio</div>
+          <div class="landing-segments">
+            <div class="seg-item" data-filter="branding"><span class="seg-num">01</span><span class="seg-name">Branding &amp; Visual Identity</span></div>
+            <div class="seg-item" data-filter="illustration"><span class="seg-num">02</span><span class="seg-name">Illustrations &amp; Animation</span></div>
+            <div class="seg-item" data-filter="digital"><span class="seg-num">03</span><span class="seg-name">Digital Works &amp; Social Media</span></div>
+            <div class="seg-item" data-filter="all"><span class="seg-num">04</span><span class="seg-name">See All My Works</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BERA DESIGN ===================== -->
+    <div class="project" id="project-bera" data-category="branding" data-name="BERA DESIGN" data-sub="Re-Branding Project">
+
+      <section class="project-entrance">
+        <div class="entrance-left">
+          <div class="entrance-title">BERA DESIGN</div>
+          <div class="entrance-subtitle">Re-Branding Project</div>
+          <div class="entrance-credits">
+            <div>CREATIVE DIRECTION [ SEZEN TUNCA STUDIO ]</div>
+            <div>GRAPHIC DESIGNER [ ME ]</div>
+            <div>BRANDING PHOTOGRAPHY [ ME ]</div>
+            <div class="cred-num">PROJECT [ NO 01 ]</div>
+          </div>
+        </div>
+        <div class="entrance-right">
+          <img src="assets/bera/bera-1.jpg" loading="lazy" alt="">
+        </div>
+      </section>
+
+      <div class="gallery-pair">
+        <div><img src="assets/bera/bera-2.jpg" loading="lazy" alt=""></div>
+        <div>
+          <img src="assets/bera/bera-3.jpg" loading="lazy" alt="">
+          <div class="gallery-caption">"Thank You" card on the right, Bera logo on the bag</div>
+        </div>
+      </div>
+
+      <div class="gallery-pair">
+        <div>
+          <img src="assets/bera/bera-4.jpg" loading="lazy" alt="">
+          <div class="gallery-caption">Shopping bags &amp; boxes</div>
+        </div>
+        <div><img src="assets/bera/bera-5.jpg" loading="lazy" alt=""></div>
+      </div>
+
+      <div class="gallery-pair">
+        <div><img src="assets/bera/bera-6.jpg" loading="lazy" alt=""></div>
+        <div>
+          <img src="assets/bera/bera-7.jpg" loading="lazy" alt="">
+          <div class="gallery-caption">Logo</div>
+        </div>
+      </div>
+
+      <div class="gallery-pair">
+        <div>
+          <img src="assets/bera/bera-8.jpg" loading="lazy" alt="">
+          <div class="gallery-caption">Packaging boxes &amp; dust bag</div>
+        </div>
+        <div><img src="assets/bera/bera-9.jpg" loading="lazy" alt=""></div>
+      </div>
+
+      <div class="gallery-pair">
+        <div><img src="assets/bera/bera-10.jpg" loading="lazy" alt=""></div>
+        <div>
+          <img src="assets/bera/bera-11.jpg" loading="lazy" alt="">
+          <div class="gallery-caption">Hang tags designed for each bag</div>
+        </div>
+      </div>
+
+      <div class="gallery-pair">
+        <div>
+          <img src="assets/bera/bera-12.jpg" loading="lazy" alt="">
+          <div class="gallery-caption">Branded tissue paper</div>
+        </div>
+        <div><img src="assets/bera/bera-13.jpg" loading="lazy" alt=""></div>
+      </div>
+
+    </div>
+
+    <footer class="end">Elif Tataroğlu — more projects to follow</footer>
+
+  </main>
+
+<script>
+  (function(){
+    var projects = Array.prototype.slice.call(document.querySelectorAll('.project'));
+    var overlayTitle = document.getElementById('overlayTitle');
+    var overlayName = document.getElementById('overlayName');
+    var overlaySub = document.getElementById('overlaySub');
+    var filterMenu = document.getElementById('filterMenu');
+
+    // The bottom-right filter menu only appears once you've scrolled past the landing hero
+    // (the landing screen already shows its own centered version of this list).
+    var landingIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ filterMenu.classList.toggle('visible', !entry.isIntersecting); });
+    }, { threshold: 0.3 });
+    var landingEl = document.querySelector('.landing');
+    if(landingEl){ landingIo.observe(landingEl); }
+
+    // Overlay title: visible + populated while a project's GALLERY (not its entrance) is in view.
+    projects.forEach(function(proj){
+      var entrance = proj.querySelector('.project-entrance');
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            overlayName.textContent = proj.getAttribute('data-name');
+            overlaySub.textContent = proj.getAttribute('data-sub');
+            overlayTitle.classList.add('visible');
+          }
+        });
+      }, { threshold: 0 });
+      // Watch every gallery pair inside this project (not the entrance).
+      Array.prototype.slice.call(proj.querySelectorAll('.gallery-pair, .gallery-single')).forEach(function(g){ io.observe(g); });
+
+      // Hide overlay while the entrance itself is on screen (inline text already shows it there).
+      var entranceIo = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){ overlayTitle.classList.remove('visible'); }
+        });
+      }, { threshold: 0.6 });
+      if(entrance){ entranceIo.observe(entrance); }
+    });
+
+    // Filtering
+    var filterEls = Array.prototype.slice.call(document.querySelectorAll('[data-filter]'));
+    function applyFilter(cat){
+      projects.forEach(function(proj){
+        var match = (cat === 'all') || (proj.getAttribute('data-category') === cat);
+        proj.style.display = match ? '' : 'none';
+      });
+      Array.prototype.slice.call(document.querySelectorAll('.filter-menu .f-item')).forEach(function(el){
+        el.classList.toggle('active', el.getAttribute('data-filter') === cat);
+      });
+    }
+    filterEls.forEach(function(el){
+      el.addEventListener('click', function(){
+        var cat = el.getAttribute('data-filter');
+        applyFilter(cat);
+        var firstMatch = document.querySelector('.project[style=""], .project:not([style])');
+        if(cat !== 'all'){
+          var target = document.querySelector('.project[data-category="'+cat+'"]');
+          if(target){ target.scrollIntoView({ behavior: 'smooth' }); }
+        }
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
