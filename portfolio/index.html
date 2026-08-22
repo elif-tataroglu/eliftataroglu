@@ -54,7 +54,7 @@
   }
   .filter-menu.visible{ opacity: 1; pointer-events: auto; }
   .filter-menu .f-item{
-    display: flex; align-items: baseline; gap: 0.55em; cursor: pointer;
+    display: flex; align-items: baseline; gap: 1em; cursor: pointer;
     color: #fff; pointer-events: auto;
   }
   .filter-menu .f-marker{
@@ -121,9 +121,9 @@
   .landing-segments .seg-item:hover .seg-name{ color: var(--ink-soft); }
 
   /* ---------- Project entrance (credits moment) ---------- */
-  .project-entrance{ display: flex; min-height: 100vh; border-top: 1px solid var(--line); }
-  .entrance-left{ width: 40%; position: relative; padding: 8vh 4vw; display: flex; flex-direction: column; }
-  .entrance-right{ width: 60%; }
+  .project-entrance{ display: flex; min-height: 100vh; }
+  .entrance-left{ width: 50%; position: relative; padding: 8vh 4vw; display: flex; flex-direction: column; }
+  .entrance-right{ width: 50%; }
   .entrance-right img{ width: 100%; height: 100%; object-fit: cover; display: block; }
 
   .entrance-title{ font-size: 0.82rem; letter-spacing: 0.06em; }
@@ -135,7 +135,7 @@
   .entrance-credits .cred-num{ margin-top: 1.6em; color: var(--ink-faint); }
 
   /* ---------- Full-bleed gallery ---------- */
-  .gallery-pair{ display: grid; grid-template-columns: 1fr 1fr; }
+  .gallery-pair{ display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: start; }
   .gallery-single{ width: 100%; }
   .gallery-pair img, .gallery-single img{ width: 100%; height: auto; display: block; }
   .gallery-caption{ font-size: 0.66rem; letter-spacing: 0.06em; color: var(--ink-faint); text-transform: uppercase; padding: 1.2em 1.5em 0; }
