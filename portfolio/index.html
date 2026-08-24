@@ -82,10 +82,21 @@
   .overlay-title .o-name{ font-size: 0.76rem; letter-spacing: 0.14em; }
   .overlay-title .o-sub{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.05rem; margin-top: 0.2em; }
 
+  /* Back to top — appears when scrolling back up past the landing hero, hides on scroll down */
+  .back-to-top{
+    position: fixed; top: 3.6vh; left: 50%; z-index: 46;
+    font-size: 0.72rem; letter-spacing: 0.16em; color: #fff;
+    mix-blend-mode: difference; cursor: pointer;
+    opacity: 0; pointer-events: none;
+    transform: translate(-50%, -6px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .back-to-top.visible{ opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+
   /* Custom cursor — a soft dot that tints toward each project's colour as you scroll through it */
   @media (hover: hover) and (pointer: fine){
     body{ cursor: none; }
-    a, .f-item, .seg-item, .about-corner{ cursor: none; }
+    a, .f-item, .seg-item, .about-corner, .back-to-top{ cursor: none; }
   }
   .cursor-dot{
     position: fixed; top: 0; left: 0; width: 16px; height: 16px; border-radius: 50%;
@@ -345,6 +356,8 @@
     <div class="o-name" id="overlayName"></div>
     <div class="o-sub" id="overlaySub"></div>
   </div>
+
+  <div class="back-to-top" id="backToTop" role="button" tabindex="0">Back to Top</div>
 
   <main>
 
@@ -614,7 +627,7 @@
     window.addEventListener('mousemove', function(e){
       cursorDot.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px) translate(-50%,-50%)';
     }, { passive: true });
-    Array.prototype.slice.call(document.querySelectorAll('a, .f-item, .seg-item, #aboutBtn')).forEach(function(el){
+    Array.prototype.slice.call(document.querySelectorAll('a, .f-item, .seg-item, #aboutBtn, #backToTop')).forEach(function(el){
       el.addEventListener('mouseenter', function(){ cursorDot.classList.add('on-link'); });
       el.addEventListener('mouseleave', function(){ cursorDot.classList.remove('on-link'); });
     });
@@ -628,7 +641,7 @@
       aboutBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
       aboutBtnText.textContent = open ? 'Close' : 'About Me';
       document.body.style.overflow = open ? 'hidden' : '';
-      if(open){ cvModal.scrollTop = 0; } else { aboutBtn.focus(); }
+      if(open){ cvModal.scrollTop = 0; backToTop.classList.remove('visible'); } else { aboutBtn.focus(); }
     }
     aboutBtn.addEventListener('click', function(){ setCvOpen(!cvModal.classList.contains('open')); });
     aboutBtn.addEventListener('keydown', function(e){
@@ -640,14 +653,36 @@
 
     // The bottom-right filter menu only appears once you've scrolled past the landing hero
     // (the landing screen already shows its own centered version of this list).
+    var pastLanding = false;
     var landingIo = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
+        pastLanding = !entry.isIntersecting;
         filterMenu.classList.toggle('visible', !entry.isIntersecting);
-        if(entry.isIntersecting){ cursorDot.style.background = 'var(--ink)'; }
+        if(entry.isIntersecting){ cursorDot.style.background = 'var(--ink)'; backToTop.classList.remove('visible'); }
       });
     }, { threshold: 0.3 });
     var landingEl = document.querySelector('.landing');
     if(landingEl){ landingIo.observe(landingEl); }
+
+    // Back to top: reveal on upward scroll past the landing hero, hide again on downward scroll.
+    var backToTop = document.getElementById('backToTop');
+    var lastScrollY = window.scrollY;
+    window.addEventListener('scroll', function(){
+      var currentY = window.scrollY;
+      var scrollingUp = currentY < lastScrollY - 2;
+      var scrollingDown = currentY > lastScrollY + 2;
+      if(pastLanding && scrollingUp){
+        backToTop.classList.add('visible');
+      } else if(scrollingDown || !pastLanding){
+        backToTop.classList.remove('visible');
+      }
+      lastScrollY = currentY;
+    }, { passive: true });
+    function scrollToTop(){ window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    backToTop.addEventListener('click', scrollToTop);
+    backToTop.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); scrollToTop(); }
+    });
 
     // Overlay title + cursor colour: driven by the same, smaller elements (gallery pairs and the
     // entrance block) rather than the whole (very tall) project container — observing an element
