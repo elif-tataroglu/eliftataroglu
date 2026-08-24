@@ -42,9 +42,9 @@
 
   /* ---------- Persistent fixed overlay: About Me + filter menu, always difference-blended ---------- */
   .about-corner{
-    position: fixed; top: 3.6vh; right: 4vw; z-index: 40;
+    position: fixed; top: 3.6vh; right: 4vw; z-index: 46;
     font-size: 0.72rem; letter-spacing: 0.16em; color: #fff;
-    mix-blend-mode: difference; pointer-events: none;
+    mix-blend-mode: difference; pointer-events: auto; cursor: pointer;
   }
   .filter-menu{
     position: fixed; right: 4vw; bottom: 4vh; z-index: 40;
@@ -80,7 +80,7 @@
   /* Custom cursor — a soft dot that tints toward each project's colour as you scroll through it */
   @media (hover: hover) and (pointer: fine){
     body{ cursor: none; }
-    a, .f-item, .seg-item{ cursor: none; }
+    a, .f-item, .seg-item, .about-corner{ cursor: none; }
   }
   .cursor-dot{
     position: fixed; top: 0; left: 0; width: 16px; height: 16px; border-radius: 50%;
@@ -91,6 +91,38 @@
     will-change: transform;
   }
   .cursor-dot.on-link{ width: 26px; height: 26px; }
+
+  /* ---------- About Me / CV modal ---------- */
+  .cv-modal{
+    position: fixed; inset: 0; z-index: 45;
+    background: var(--bg); overflow-y: auto;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .cv-modal.open{ opacity: 1; visibility: visible; pointer-events: auto; }
+  .cv-inner{ max-width: 900px; margin: 0 auto; padding: 14vh 4vw 16vh; }
+
+  .cv-head{ display: flex; align-items: flex-end; gap: 3em; margin-bottom: 8vh; flex-wrap: wrap; }
+  .cv-photo{ width: 108px; height: 108px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+  .cv-name{ font-size: 0.76rem; letter-spacing: 0.14em; }
+  .cv-role{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.6rem; color: var(--ink); margin-top: 0.2em; }
+  .cv-bio{ font-size: 0.82rem; line-height: 1.7; color: var(--ink-soft); font-weight: 300; max-width: 56ch; margin-bottom: 2vh; }
+
+  .cv-section{ display: flex; gap: 3vw; padding: 3.2em 0; border-top: 1px solid var(--line); }
+  .cv-label{ width: 17ch; flex-shrink: 0; font-size: 0.68rem; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; }
+  .cv-entries{ flex: 1; display: flex; flex-direction: column; gap: 2.4em; min-width: 0; }
+  .cv-entry-date{ font-size: 0.68rem; letter-spacing: 0.05em; color: var(--ink-faint); margin-bottom: 0.6em; }
+  .cv-entry-title{ font-size: 0.82rem; letter-spacing: 0.02em; }
+  .cv-entry-sub{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.02rem; color: var(--ink-soft); margin-top: 0.15em; }
+  .cv-entry-desc{ font-size: 0.78rem; line-height: 1.8; color: var(--ink-soft); font-weight: 300; max-width: 60ch; margin-top: 0.8em; }
+  .cv-entry-desc p{ margin: 0 0 0.3em; }
+  .cv-entry-desc p:last-child{ margin-bottom: 0; }
+  .cv-inline-list{ font-size: 0.78rem; line-height: 2.1; color: var(--ink-soft); font-weight: 300; }
+  .cv-inline-list b{ font-family: 'ABC Favorit Mono', monospace; font-weight: 500; color: var(--ink); }
+
+  .cv-contact{ padding-top: 3.2em; }
+  .cv-contact a{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.3rem; color: var(--ink); text-decoration: none; transition: color 0.3s ease; }
+  .cv-contact a:hover{ color: var(--ink-soft); }
 
   /* ---------- Landing hero ---------- */
   .landing{ height: 100vh; position: relative; display: flex; }
@@ -133,7 +165,6 @@
 
   .entrance-credits{ margin-top: auto; }
   .entrance-credits div{ font-size: 0.68rem; letter-spacing: 0.05em; color: var(--ink); line-height: 1.9; }
-  .entrance-credits .cred-num{ margin-top: 1.6em; color: var(--ink-faint); }
 
   /* ---------- Full-bleed gallery ---------- */
   .gallery-pair{ display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: start; }
@@ -141,7 +172,14 @@
   .gallery-pair img, .gallery-single img{ width: 100%; height: auto; display: block; }
   .gallery-caption{ font-size: 0.66rem; letter-spacing: 0.06em; color: var(--ink-faint); text-transform: uppercase; padding: 1.2em 1.5em 0; }
 
-  footer.end{ padding: 10vh 4vw 18vh; border-top: 1px solid var(--line); font-size: 0.7rem; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; }
+  footer.end{ padding: 14vh 4vw 20vh; border-top: 1px solid var(--line); }
+  .end-contact{
+    font-family: 'IM Fell French Canon', serif; font-style: italic;
+    font-size: clamp(1.6rem, 2.4vw, 2.1rem); color: var(--ink);
+    text-decoration: none; display: inline-block;
+    transition: color 0.3s ease;
+  }
+  .end-contact:hover{ color: var(--ink-soft); }
 
   @media (max-width: 880px){
     .landing{ flex-direction: column; height: auto; min-height: 100vh; }
@@ -153,6 +191,9 @@
     .entrance-left, .entrance-right{ width: 100%; }
     .gallery-pair{ grid-template-columns: 1fr; }
     .about-corner{ display: none; }
+    .cv-section{ flex-direction: column; gap: 1em; }
+    .cv-label{ width: auto; }
+    .cv-head{ gap: 1.5em; }
   }
 </style>
 </head>
@@ -160,7 +201,108 @@
 
   <div class="cursor-dot" id="cursorDot"></div>
 
-  <div class="about-corner">About Me</div>
+  <div class="about-corner" id="aboutBtn" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false"><span id="aboutBtnText">About Me</span></div>
+
+  <div class="cv-modal" id="cvModal" role="dialog" aria-modal="true" aria-label="Elif Tataroğlu — CV">
+    <div class="cv-inner">
+
+      <div class="cv-head">
+        <img class="cv-photo" src="assets/about/about-photo.jpg" alt="Elif Tataroğlu">
+        <div>
+          <div class="cv-name">ELİF TATAROĞLU</div>
+          <div class="cv-role">Visual Designer</div>
+        </div>
+      </div>
+
+      <div class="cv-bio">Graphic designer with 6 years of experience working across design studios, PR agencies, and international fashion brands. Strong background in working with marketing and creative teams.</div>
+
+      <div class="cv-section">
+        <div class="cv-label">Education</div>
+        <div class="cv-entries">
+          <div class="cv-entry">
+            <div class="cv-entry-date">09/2024 — Today</div>
+            <div class="cv-entry-title">Master of Science in Communication, Digital Communication</div>
+            <div class="cv-entry-sub">USI Università della Svizzera Italiana, Lugano · Université Paris 1 Panthéon-Sorbonne, Paris</div>
+            <div class="cv-entry-desc">Double degree program. Courses: Brand Management, Omnichannel &amp; Personalization, Critical Consumer Behaviour, E-Commerce.</div>
+          </div>
+          <div class="cv-entry">
+            <div class="cv-entry-date">09/2018 — 06/2019</div>
+            <div class="cv-entry-title">Exchange Year — Bachelor in Graphic Design &amp; Art Direction</div>
+            <div class="cv-entry-sub">Nuova Accademia di Belle Arti, Milano</div>
+          </div>
+          <div class="cv-entry">
+            <div class="cv-entry-date">09/2015 — 06/2021</div>
+            <div class="cv-entry-title">Bachelor in Graphic Design</div>
+            <div class="cv-entry-sub">Mimar Sinan Fine Arts University, Istanbul</div>
+            <div class="cv-entry-desc">GPA: 3.61 / 4</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cv-section">
+        <div class="cv-label">Professional Experience</div>
+        <div class="cv-entries">
+          <div class="cv-entry">
+            <div class="cv-entry-date">06/2022 — Today</div>
+            <div class="cv-entry-title">Freelance Graphic Designer — Aytul Ayke Studio, Istanbul</div>
+            <div class="cv-entry-sub">Event Design &amp; PR Agency working with LVMH Group brands and leading brands</div>
+            <div class="cv-entry-desc">
+              <p>Designed high-end presentation decks and proposal materials for client-facing projects.</p>
+              <p>Created event concepts, sketches, and bespoke illustrations to support creative direction and storytelling.</p>
+              <p>Developed custom-designed websites and visual assets aligned with brand identity and campaign goals.</p>
+            </div>
+          </div>
+          <div class="cv-entry">
+            <div class="cv-entry-date">02/2024 — Today</div>
+            <div class="cv-entry-title">Social Media Designer — ATTIRE the Studio, Paris</div>
+            <div class="cv-entry-sub">Fashion brand directed by Xenia Adonts</div>
+            <div class="cv-entry-desc">
+              <p>Developed creative concepts and visual content for social media and email campaigns.</p>
+              <p>Collaborated with the creative director to enhance ATTIRE's digital presence and engagement.</p>
+            </div>
+          </div>
+          <div class="cv-entry">
+            <div class="cv-entry-date">12/2020 — Today</div>
+            <div class="cv-entry-title">Graphic Designer — MOEVA, London</div>
+            <div class="cv-entry-sub">Luxury swimwear brand, established 2012, sold in over 80 stores across 45 countries</div>
+            <div class="cv-entry-desc">
+              <p>Designed campaigns and visual content with an omnichannel approach, boosting sales.</p>
+              <p>Enhanced social media engagement through strategically designed content and campaigns.</p>
+              <p>Created targeted marketing and PR materials for the Dubai store, resonating with the local market.</p>
+              <p>Developed visuals for fairs and fashion weeks, engaging buyers.</p>
+            </div>
+          </div>
+          <div class="cv-entry">
+            <div class="cv-entry-date">11/2021 — 09/2024</div>
+            <div class="cv-entry-title">Junior Brand &amp; Graphic Designer — Sezen Tunca Studio, Istanbul</div>
+            <div class="cv-entry-sub">Creative Design Studio</div>
+            <div class="cv-entry-desc">
+              <p>Designed distinct brand identities and packaging to elevate brand visibility.</p>
+              <p>Directed creative projects, including illustration, enhancing brand narratives.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cv-section">
+        <div class="cv-label">Certificates</div>
+        <div class="cv-inline-list">11/2024 &nbsp; Inside LVMH Certificate Program</div>
+      </div>
+
+      <div class="cv-section">
+        <div class="cv-label">Languages</div>
+        <div class="cv-inline-list"><b>Turkish</b> — Mother Tongue &nbsp;·&nbsp; <b>English</b> — Fluent (TOEFL 104) &nbsp;·&nbsp; <b>French</b> — Basic</div>
+      </div>
+
+      <div class="cv-section">
+        <div class="cv-label">Skills</div>
+        <div class="cv-inline-list"><b>Adobe Creative Suite</b> — Advanced &nbsp;·&nbsp; <b>Figma</b> — Advanced &nbsp;·&nbsp; <b>Motion Graphics</b></div>
+      </div>
+
+      <div class="cv-contact"><a href="mailto:elif@eliftataroglu.com">elif@eliftataroglu.com</a></div>
+
+    </div>
+  </div>
 
   <nav class="filter-menu" id="filterMenu">
     <div class="f-item" data-filter="branding"><span class="f-marker"></span><span class="f-num">01</span><span class="f-name">Branding &amp; Visual Identity</span></div>
@@ -209,7 +351,6 @@
             <div>CREATIVE DIRECTION [ SEZEN TUNCA STUDIO ]</div>
             <div>GRAPHIC DESIGNER [ ME ]</div>
             <div>BRANDING PHOTOGRAPHY [ ME ]</div>
-            <div class="cred-num">PROJECT [ NO 01 ]</div>
           </div>
         </div>
         <div class="entrance-right"><img src="assets/bera/bera-1.jpg" loading="lazy" alt=""></div>
@@ -231,7 +372,6 @@
             <div>CREATIVE DIRECTION [ STUDIO BORN ]</div>
             <div>GRAPHIC DESIGNER [ ME ]</div>
             <div>ILLUSTRATIONS [ ME ]</div>
-            <div class="cred-num">PROJECT [ NO 02 ]</div>
           </div>
         </div>
         <div class="entrance-right"><img src="assets/misk/misk-1.jpg" loading="lazy" alt=""></div>
@@ -254,7 +394,6 @@
             <div>CREATIVE DIRECTION [ SEZEN TUNCA STUDIO ]</div>
             <div>GRAPHIC DESIGNER [ ME ]</div>
             <div>BRANDING PHOTOGRAPHY [ ME ]</div>
-            <div class="cred-num">PROJECT [ NO 03 ]</div>
           </div>
         </div>
         <div class="entrance-right"><img src="assets/authentic-seconds/authentic-seconds-1.jpg" loading="lazy" alt=""></div>
@@ -276,7 +415,6 @@
             <div>CREATIVE DIRECTION [ SEZEN TUNCA STUDIO ]</div>
             <div>GRAPHIC DESIGNER [ ME ]</div>
             <div>BRANDING PHOTOGRAPHY [ ME ]</div>
-            <div class="cred-num">PROJECT [ NO 04 ]</div>
           </div>
         </div>
         <div class="entrance-right"><img src="assets/derya/derya-1.jpg" loading="lazy" alt=""></div>
@@ -296,7 +434,6 @@
           <div class="entrance-credits">
             <div>CREATIVE DIRECTION [ SEZEN TUNCA STUDIO ]</div>
             <div>GRAPHIC DESIGNER [ ME ]</div>
-            <div class="cred-num">PROJECT [ NO 06 ]</div>
           </div>
         </div>
         <div class="entrance-right"><img src="assets/kukina/kukina-1.jpg" loading="lazy" alt=""></div>
@@ -314,7 +451,6 @@
           <div class="entrance-credits">
             <div>CREATIVE DIRECTION [ SEZEN TUNCA STUDIO ]</div>
             <div>GRAPHIC DESIGNER [ ME ]</div>
-            <div class="cred-num">PROJECT [ NO 07 ]</div>
           </div>
         </div>
         <div class="entrance-right"><img src="assets/mornings-in-pera/mornings-in-pera-1.jpg" loading="lazy" alt=""></div>
@@ -332,7 +468,6 @@
           <div class="entrance-credits">
             <div>CREATIVE DIRECTION [ SEZEN TUNCA STUDIO ]</div>
             <div>ILLUSTRATION [ ME ]</div>
-            <div class="cred-num">PROJECT [ NO 08 ]</div>
           </div>
         </div>
         <div class="entrance-right"><img src="assets/ipekyol/ipekyol-1.jpg" loading="lazy" alt=""></div>
@@ -350,7 +485,6 @@
             <div>CREATIVE DIRECTION [ SEZEN TUNCA STUDIO ]</div>
             <div>GRAPHIC DESIGNER [ ME ]</div>
             <div>AI IMAGERY [ ME ]</div>
-            <div class="cred-num">PROJECT [ NO 09 ]</div>
           </div>
         </div>
         <div class="entrance-right"><img src="assets/melez/melez-1.jpg" loading="lazy" alt=""></div>
@@ -370,7 +504,6 @@
             <div>CREATIVE DIRECTION [ SEZEN TUNCA STUDIO ]</div>
             <div>GRAPHIC DESIGNER [ ME ]</div>
             <div>WEBSITE EXECUTION [ ME ]</div>
-            <div class="cred-num">PROJECT [ NO 10 ]</div>
           </div>
         </div>
         <div class="entrance-right"><img src="assets/nasibe/nasibe-1.jpg" loading="lazy" alt=""></div>
@@ -387,7 +520,6 @@
           <div class="entrance-credits">
             <div>CREATIVE DIRECTION [ ME ]</div>
             <div>GRAPHIC DESIGNER [ ME ]</div>
-            <div class="cred-num">PROJECT [ NO 11 ]</div>
           </div>
         </div>
         <div class="entrance-right"><img src="assets/moeva/moeva-1.jpg" loading="lazy" alt=""></div>
@@ -407,7 +539,6 @@
           <div class="entrance-credits">
             <div>CREATIVE DIRECTION [ SEZEN TUNCA STUDIO ]</div>
             <div>GRAPHIC DESIGNER [ ME ]</div>
-            <div class="cred-num">PROJECT [ NO 12 ]</div>
           </div>
         </div>
         <div class="entrance-right"><img src="assets/midnight/midnight-1.jpg" loading="lazy" alt=""></div>
@@ -428,7 +559,6 @@
             <div>CREATIVE DIRECTION [ ME ]</div>
             <div>GRAPHIC DESIGNER [ ME ]</div>
             <div>BRANDING PHOTOGRAPHY [ ME ]</div>
-            <div class="cred-num">PROJECT [ NO 13 ]</div>
           </div>
         </div>
         <div class="entrance-right"><img src="assets/attire/attire-1.jpg" loading="lazy" alt=""></div>
@@ -437,7 +567,7 @@
       <div class="gallery-pair"><div><img src="assets/attire/attire-4.jpg" loading="lazy" alt=""></div><div><img src="assets/attire/attire-5.jpg" loading="lazy" alt=""></div></div>
     </div>
 
-    <footer class="end">Elif Tataroğlu — more projects to follow</footer>
+    <footer class="end"><a class="end-contact" href="mailto:elif@eliftataroglu.com">Contact Me</a></footer>
 
   </main>
 
@@ -454,9 +584,28 @@
     window.addEventListener('mousemove', function(e){
       cursorDot.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px) translate(-50%,-50%)';
     }, { passive: true });
-    Array.prototype.slice.call(document.querySelectorAll('a, .f-item, .seg-item')).forEach(function(el){
+    Array.prototype.slice.call(document.querySelectorAll('a, .f-item, .seg-item, #aboutBtn')).forEach(function(el){
       el.addEventListener('mouseenter', function(){ cursorDot.classList.add('on-link'); });
       el.addEventListener('mouseleave', function(){ cursorDot.classList.remove('on-link'); });
+    });
+
+    // About Me → CV modal
+    var aboutBtn = document.getElementById('aboutBtn');
+    var aboutBtnText = document.getElementById('aboutBtnText');
+    var cvModal = document.getElementById('cvModal');
+    function setCvOpen(open){
+      cvModal.classList.toggle('open', open);
+      aboutBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      aboutBtnText.textContent = open ? 'Close' : 'About Me';
+      document.body.style.overflow = open ? 'hidden' : '';
+      if(open){ cvModal.scrollTop = 0; } else { aboutBtn.focus(); }
+    }
+    aboutBtn.addEventListener('click', function(){ setCvOpen(!cvModal.classList.contains('open')); });
+    aboutBtn.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); setCvOpen(!cvModal.classList.contains('open')); }
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && cvModal.classList.contains('open')){ setCvOpen(false); }
     });
 
     // The bottom-right filter menu only appears once you've scrolled past the landing hero
