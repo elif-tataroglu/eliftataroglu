@@ -22,6 +22,11 @@
     src: url('assets/fonts/IM_FELL_French_Canon_Italic.ttf') format('truetype');
     font-weight: 400; font-style: italic; font-display: swap;
   }
+  @font-face {
+    font-family: 'Neue Haas Grotesk Display';
+    src: url('assets/fonts/NHaasGroteskDSPro-55Rg.otf') format('opentype');
+    font-weight: 400; font-style: normal; font-display: swap;
+  }
 
   :root{
     --bg: #f7f6f2;
@@ -106,22 +111,44 @@
   .cv-photo{ width: 108px; height: 108px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
   .cv-name{ font-size: 0.76rem; letter-spacing: 0.14em; }
   .cv-role{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.6rem; color: var(--ink); margin-top: 0.2em; }
-  .cv-bio{ font-size: 0.82rem; line-height: 1.7; color: var(--ink-soft); font-weight: 300; max-width: 56ch; margin-bottom: 2vh; }
+  .cv-bio{
+    font-family: 'Neue Haas Grotesk Display', 'ABC Favorit Mono Light', sans-serif;
+    font-size: 0.92rem; line-height: 1.75; color: var(--ink-soft); font-weight: 400;
+    max-width: 52ch; margin-bottom: 2vh;
+  }
 
   .cv-section{ display: flex; gap: 3vw; padding: 3.2em 0; border-top: 1px solid var(--line); }
-  .cv-label{ width: 17ch; flex-shrink: 0; font-size: 0.68rem; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; }
-  .cv-entries{ flex: 1; display: flex; flex-direction: column; gap: 2.4em; min-width: 0; }
-  .cv-entry-date{ font-size: 0.68rem; letter-spacing: 0.05em; color: var(--ink-faint); margin-bottom: 0.6em; }
-  .cv-entry-title{ font-size: 0.82rem; letter-spacing: 0.02em; }
-  .cv-entry-sub{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.02rem; color: var(--ink-soft); margin-top: 0.15em; }
-  .cv-entry-desc{ font-size: 0.78rem; line-height: 1.8; color: var(--ink-soft); font-weight: 300; max-width: 60ch; margin-top: 0.8em; }
-  .cv-entry-desc p{ margin: 0 0 0.3em; }
+  .cv-label{
+    font-family: 'Neue Haas Grotesk Display', 'ABC Favorit Mono Light', sans-serif;
+    width: 17ch; flex-shrink: 0; font-size: 0.7rem; letter-spacing: 0.07em; color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .cv-entries{ flex: 1; display: flex; flex-direction: column; gap: 2.6em; min-width: 0; }
+  .cv-entry-date{ font-size: 0.68rem; letter-spacing: 0.05em; color: var(--ink-faint); margin-bottom: 0.7em; }
+  .cv-entry-title{
+    font-family: 'Neue Haas Grotesk Display', 'ABC Favorit Mono Light', sans-serif;
+    font-size: 0.94rem; line-height: 1.4; color: var(--ink);
+  }
+  .cv-entry-sub{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.02rem; color: var(--ink-soft); margin-top: 0.3em; }
+  .cv-entry-desc{
+    font-family: 'Neue Haas Grotesk Display', 'ABC Favorit Mono Light', sans-serif;
+    font-size: 0.85rem; line-height: 1.8; color: var(--ink-soft); font-weight: 400;
+    max-width: 58ch; margin-top: 1em;
+  }
+  .cv-entry-desc p{ margin: 0 0 0.4em; }
   .cv-entry-desc p:last-child{ margin-bottom: 0; }
-  .cv-inline-list{ font-size: 0.78rem; line-height: 2.1; color: var(--ink-soft); font-weight: 300; }
-  .cv-inline-list b{ font-family: 'ABC Favorit Mono', monospace; font-weight: 500; color: var(--ink); }
+  .cv-inline-list{
+    font-family: 'Neue Haas Grotesk Display', 'ABC Favorit Mono Light', sans-serif;
+    font-size: 0.85rem; line-height: 2.1; color: var(--ink-soft); font-weight: 400;
+  }
+  .cv-inline-list b{ font-weight: 700; color: var(--ink); }
 
   .cv-contact{ padding-top: 3.2em; }
-  .cv-contact a{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.3rem; color: var(--ink); text-decoration: none; transition: color 0.3s ease; }
+  .cv-contact a{
+    font-family: 'IM Fell French Canon', serif; font-style: italic;
+    font-size: 1.3rem; letter-spacing: 0.05em; color: var(--ink);
+    text-decoration: none; transition: color 0.3s ease;
+  }
   .cv-contact a:hover{ color: var(--ink-soft); }
 
   /* ---------- Landing hero ---------- */
@@ -299,7 +326,7 @@
         <div class="cv-inline-list"><b>Adobe Creative Suite</b> — Advanced &nbsp;·&nbsp; <b>Figma</b> — Advanced &nbsp;·&nbsp; <b>Motion Graphics</b></div>
       </div>
 
-      <div class="cv-contact"><a href="mailto:elif@eliftataroglu.com">elif@eliftataroglu.com</a></div>
+      <div class="cv-contact"><a href="mailto:elif@eliftataroglu.com">Contact Me</a></div>
 
     </div>
   </div>
