@@ -1,0 +1,14 @@
+{
+  "name": "eliftataroglu",
+  "version": "1.0.0",
+  "description": "Elif Tataroğlu — Visual Designer Portfolio",
+  "scripts": {
+    "build": "echo 'Static site - no build required'"
+  },
+  "keywords": ["portfolio", "design"],
+  "author": "Elif Tataroğlu",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^1.3.1"
+  }
+}
