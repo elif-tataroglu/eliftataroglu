@@ -25,7 +25,7 @@
   }
 
   :root{
-    --bg: #f7f6f2;
+    --bg: #fffaf6;
     --ink: #1a170f;
     --ink-soft: rgba(26,23,15,0.56);
     --ink-faint: rgba(26,23,15,0.34);
@@ -42,7 +42,7 @@
   img, video{ max-width: 100%; display: block; }
 
   /* ---------- Password gate (same pattern as the case studies) ---------- */
-  #gate{ position:fixed; inset:0; z-index:9999; background:#f7f6f2; display:flex; align-items:center; justify-content:center; transition:opacity 0.5s ease; }
+  #gate{ position:fixed; inset:0; z-index:9999; background:#fffaf6; display:flex; align-items:center; justify-content:center; transition:opacity 0.5s ease; }
   #gate.unlocked{ opacity:0; pointer-events:none; }
   #gate form{ display:flex; flex-direction:column; align-items:center; gap:1.4em; }
   #gate input{
@@ -76,28 +76,32 @@
   .hero{ height: 100vh; position: relative; display: flex; align-items: center; }
   .hero-heading{
     font-family: 'IM Fell French Canon', serif; font-style: italic;
-    font-size: clamp(2.2rem, 5vw, 4.2rem);
-    line-height: 1.25; max-width: 16ch;
+    font-size: clamp(1.8rem, 4vw, 3.4rem);
+    line-height: 1.25; white-space: nowrap;
     padding-left: 4vw;
   }
 
   /* ---------- Media stream ---------- */
   .media-item{ width: 100%; }
+  .media-item.proj-start{ margin-top: 10vh; }
   .media-item.image-slot{ height: 100vh; }
   .media-item.image-slot img{ width: 100%; height: 100%; object-fit: cover; }
-  .media-item.video-slot{
+  .media-item.video-slot,
+  .media-item.image-slot-centered{
     height: 100vh; display: flex; align-items: center; justify-content: center;
     background: var(--bg);
   }
-  .media-item.video-slot video{
+  .media-item.video-slot video,
+  .media-item.image-slot-centered img{
     max-width: 60vw; max-height: 80vh; width: auto; height: auto;
   }
 
   @media (max-width: 880px){
     .identity-corner{ display: none; }
     .item-title{ display: none; }
-    .hero-heading{ font-size: clamp(1.8rem, 8vw, 2.6rem); padding-left: 6vw; }
-    .media-item.video-slot video{ max-width: 88vw; max-height: 70vh; }
+    .hero-heading{ font-size: clamp(1.3rem, 6.5vw, 2rem); padding-left: 6vw; white-space: normal; }
+    .media-item.video-slot video,
+    .media-item.image-slot-centered img{ max-width: 88vw; max-height: 70vh; }
   }
 </style>
 </head>
@@ -125,17 +129,23 @@
         <div class="hero-heading">Weddings &amp; Illustrations</div>
       </section>
 
-      <div class="media-item image-slot" data-name="Tulya &amp; Tarek Wedding"><img src="assets/01-tulya-tarek-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item video-slot proj-start" data-name="Mina &amp; Cahit Wedding"><video data-src="assets/19-mina-cahit.mp4" muted loop playsinline preload="metadata"></video></div>
+
+      <div class="media-item video-slot proj-start" data-name="Leili &amp; Johnny Wedding"><video data-src="assets/leili-johnny.mp4" muted loop playsinline preload="metadata"></video></div>
+
+      <div class="media-item image-slot proj-start" data-name="Tulya &amp; Tarek Wedding"><img src="assets/01-tulya-tarek-1.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Tulya &amp; Tarek Wedding"><img src="assets/02-tulya-tarek-2.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Tulya &amp; Tarek Wedding"><img src="assets/03-tulya-tarek-3.jpg" loading="lazy" alt=""></div>
 
-      <div class="media-item video-slot" data-name="İpek &amp; Zeki Wedding"><video data-src="assets/04-ipek-zeki.mp4" muted loop playsinline preload="metadata"></video></div>
+      <div class="media-item video-slot proj-start" data-name="İpek &amp; Zeki Wedding"><video data-src="assets/04-ipek-zeki.mp4" muted loop playsinline preload="metadata"></video></div>
 
-      <div class="media-item image-slot" data-name="McKenzie &amp; Childs Tea Time Menu"><img src="assets/05-mckenzie-childs-menu.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot-centered proj-start" data-name="McKenzie &amp; Childs Tea Time Menu"><img src="assets/05-mckenzie-childs-menu.jpg" loading="lazy" alt=""></div>
 
-      <div class="media-item video-slot" data-name="Jilla &amp; Arman Wedding"><video data-src="assets/06-jilla-arman.mp4" muted loop playsinline preload="metadata"></video></div>
+      <div class="media-item video-slot proj-start" data-name="Aponine Jewelry Invitation"><video data-src="assets/aponine-jewelry.mp4" muted loop playsinline preload="metadata"></video></div>
 
-      <div class="media-item image-slot" data-name="Zeynep &amp; Hussain Wedding"><img src="assets/07-zeynep-hussain-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item video-slot proj-start" data-name="Jilla &amp; Arman Wedding"><video data-src="assets/06-jilla-arman.mp4" muted loop playsinline preload="metadata"></video></div>
+
+      <div class="media-item image-slot proj-start" data-name="Zeynep &amp; Hussain Wedding"><img src="assets/07-zeynep-hussain-1.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Zeynep &amp; Hussain Wedding"><img src="assets/08-zeynep-hussain-2.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Zeynep &amp; Hussain Wedding"><img src="assets/09-zeynep-hussain-3.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Zeynep &amp; Hussain Wedding"><img src="assets/10-zeynep-hussain-4.jpg" loading="lazy" alt=""></div>
@@ -143,34 +153,32 @@
       <div class="media-item image-slot" data-name="Zeynep &amp; Hussain Wedding"><img src="assets/12-zeynep-hussain-6.jpg" loading="lazy" alt=""></div>
       <div class="media-item video-slot" data-name="Zeynep &amp; Hussain Wedding Invitation"><video data-src="assets/13-zeynep-hussain-invitation.mp4" muted loop playsinline preload="metadata"></video></div>
 
-      <div class="media-item image-slot" data-name="Sima &amp; Mark Wedding"><img src="assets/14-sima-mark-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot proj-start" data-name="Sima &amp; Mark Wedding"><img src="assets/14-sima-mark-1.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Sima &amp; Mark Wedding"><img src="assets/15-sima-mark-2.jpg" loading="lazy" alt=""></div>
       <div class="media-item video-slot" data-name="Sima &amp; Mark Wedding"><video data-src="assets/16-sima-mark-3.mp4" muted loop playsinline preload="metadata"></video></div>
 
-      <div class="media-item image-slot" data-name="Hanzade's Birthday"><img src="assets/17-hanzade-birthday-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot proj-start" data-name="Hanzade's Birthday"><img src="assets/17-hanzade-birthday-1.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Hanzade's Birthday"><img src="assets/18-hanzade-birthday-2.jpg" loading="lazy" alt=""></div>
 
-      <div class="media-item video-slot" data-name="Mina &amp; Cahit Wedding"><video data-src="assets/19-mina-cahit.mp4" muted loop playsinline preload="metadata"></video></div>
+      <div class="media-item video-slot proj-start" data-name="Twist Valentine's Campaign"><video data-src="assets/20-twist-valentines-campaign.mp4" muted loop playsinline preload="metadata"></video></div>
 
-      <div class="media-item video-slot" data-name="Twist Valentine's Campaign"><video data-src="assets/20-twist-valentines-campaign.mp4" muted loop playsinline preload="metadata"></video></div>
-
-      <div class="media-item image-slot" data-name="Pürnur &amp; Berkay Wedding"><img src="assets/21-purnur-berkay-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot proj-start" data-name="Pürnur &amp; Berkay Wedding"><img src="assets/21-purnur-berkay-1.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Pürnur &amp; Berkay Wedding"><img src="assets/22-purnur-berkay-2.jpg" loading="lazy" alt=""></div>
 
-      <div class="media-item video-slot" data-name="Hande &amp; Alperen Wedding"><video data-src="assets/23-hande-alperen.mp4" muted loop playsinline preload="metadata"></video></div>
+      <div class="media-item video-slot proj-start" data-name="Hande &amp; Alperen Wedding"><video data-src="assets/23-hande-alperen.mp4" muted loop playsinline preload="metadata"></video></div>
 
-      <div class="media-item image-slot" data-name="Yasemin &amp; Emrecan Wedding"><img src="assets/24-yasemin-emrecan-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot proj-start" data-name="Yasemin &amp; Emrecan Wedding"><img src="assets/24-yasemin-emrecan-1.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Yasemin &amp; Emrecan Wedding"><img src="assets/25-yasemin-emrecan-2.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Yasemin &amp; Emrecan Wedding"><img src="assets/26-yasemin-emrecan-3.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Yasemin &amp; Emrecan Wedding"><img src="assets/27-yasemin-emrecan-4.jpg" loading="lazy" alt=""></div>
       <div class="media-item video-slot" data-name="Yasemin &amp; Emrecan Wedding Invitation"><video data-src="assets/28-yasemin-emrecan-invitation.mp4" muted loop playsinline preload="metadata"></video></div>
 
-      <div class="media-item image-slot" data-name="Nazlı &amp; Eren Wedding"><img src="assets/29-nazli-eren-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot proj-start" data-name="Nazlı &amp; Eren Wedding"><img src="assets/29-nazli-eren-1.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Nazlı &amp; Eren Wedding"><img src="assets/30-nazli-eren-2.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Nazlı &amp; Eren Wedding"><img src="assets/31-nazli-eren-3.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Nazlı &amp; Eren Wedding"><img src="assets/32-nazli-eren-4.jpg" loading="lazy" alt=""></div>
 
-      <div class="media-item image-slot" data-name="Elif &amp; Alen Wedding"><img src="assets/33-elif-alen-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot proj-start" data-name="Elif &amp; Alen Wedding"><img src="assets/33-elif-alen-1.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Elif &amp; Alen Wedding"><img src="assets/34-elif-alen-2.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Elif &amp; Alen Wedding"><img src="assets/35-elif-alen-3.jpg" loading="lazy" alt=""></div>
       <div class="media-item image-slot" data-name="Elif &amp; Alen Wedding"><img src="assets/36-elif-alen-4.jpg" loading="lazy" alt=""></div>
