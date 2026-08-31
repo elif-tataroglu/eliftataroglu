@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<base href="/weddings/">
+<title>Elif Tataroğlu — Weddings &amp; Illustrations</title>
+
+<style>
+  @font-face {
+    font-family: 'ABC Favorit Mono Light';
+    src: url('assets/fonts/ABCFavoritMonoUnlicensedTrial-Light.otf') format('opentype');
+    font-weight: 300; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'ABC Favorit Mono';
+    src: url('assets/fonts/ABCFavoritMonoVariableUnlicensedTrial-Regular.ttf') format('truetype');
+    font-weight: 100 800; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'IM Fell French Canon';
+    src: url('assets/fonts/IM_FELL_French_Canon_Italic.ttf') format('truetype');
+    font-weight: 400; font-style: italic; font-display: swap;
+  }
+
+  :root{
+    --bg: #f7f6f2;
+    --ink: #1a170f;
+    --ink-soft: rgba(26,23,15,0.56);
+    --ink-faint: rgba(26,23,15,0.34);
+    --line: rgba(26,23,15,0.15);
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: 'ABC Favorit Mono Light', 'ABC Favorit Mono', monospace;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img, video{ max-width: 100%; display: block; }
+
+  /* ---------- Password gate (same pattern as the case studies) ---------- */
+  #gate{ position:fixed; inset:0; z-index:9999; background:#f7f6f2; display:flex; align-items:center; justify-content:center; transition:opacity 0.5s ease; }
+  #gate.unlocked{ opacity:0; pointer-events:none; }
+  #gate form{ display:flex; flex-direction:column; align-items:center; gap:1.4em; }
+  #gate input{
+    font-family:'ABC Favorit Mono Light','ABC Favorit Mono',monospace; font-size:0.85rem; letter-spacing:0.04em;
+    background:transparent; border:none; border-bottom:1px solid rgba(26,23,15,0.34); color:#1a170f;
+    text-align:center; padding:0.5em 0; width:14em; outline:none;
+  }
+  #gate input::placeholder{ color:rgba(26,23,15,0.34); }
+  #gate .err{ font-size:0.7rem; letter-spacing:0.06em; color:#1a170f; opacity:0; height:1em; }
+  #gate .err.show{ opacity:0.55; }
+  #siteContent{ transition:opacity 0.4s ease; }
+  #siteContent.hidden{ opacity:0; }
+
+  /* ---------- Persistent fixed overlay: identity (bottom-left) + current item name (top-right) ---------- */
+  .identity-corner{
+    position: fixed; left: 4vw; bottom: 3.6vh; z-index: 46;
+    color: #fff; mix-blend-mode: difference; pointer-events: none;
+  }
+  .identity-corner .id-name{ font-size: 0.76rem; letter-spacing: 0.14em; }
+  .identity-corner .id-sub{ font-family: 'IM Fell French Canon', serif; font-style: italic; font-size: 1.05rem; margin-top: 0.2em; }
+
+  .item-title{
+    position: fixed; top: 3.6vh; right: 4vw; z-index: 46;
+    color: #fff; mix-blend-mode: difference; pointer-events: none;
+    font-size: 0.76rem; letter-spacing: 0.1em; text-align: right;
+    opacity: 0; transition: opacity 0.5s ease;
+  }
+  .item-title.visible{ opacity: 1; }
+
+  /* ---------- Hero ---------- */
+  .hero{ height: 100vh; position: relative; display: flex; align-items: center; }
+  .hero-heading{
+    font-family: 'IM Fell French Canon', serif; font-style: italic;
+    font-size: clamp(2.2rem, 5vw, 4.2rem);
+    line-height: 1.25; max-width: 16ch;
+    padding-left: 4vw;
+  }
+
+  /* ---------- Media stream ---------- */
+  .media-item{ width: 100%; }
+  .media-item.image-slot{ height: 100vh; }
+  .media-item.image-slot img{ width: 100%; height: 100%; object-fit: cover; }
+  .media-item.video-slot{
+    height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: var(--bg);
+  }
+  .media-item.video-slot video{
+    max-width: 60vw; max-height: 80vh; width: auto; height: auto;
+  }
+
+  @media (max-width: 880px){
+    .identity-corner{ display: none; }
+    .item-title{ display: none; }
+    .hero-heading{ font-size: clamp(1.8rem, 8vw, 2.6rem); padding-left: 6vw; }
+    .media-item.video-slot video{ max-width: 88vw; max-height: 70vh; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="gate">
+    <form id="gateForm">
+      <input type="password" id="gatePassword" placeholder="Password" autocomplete="off" autofocus>
+      <div class="err" id="gateErr">Incorrect password</div>
+    </form>
+  </div>
+
+  <div id="siteContent" class="hidden">
+
+    <div class="identity-corner">
+      <div class="id-name">ELİF TATAROĞLU</div>
+      <div class="id-sub">Weddings &amp; Illustrations</div>
+    </div>
+
+    <div class="item-title" id="itemTitle"></div>
+
+    <main>
+
+      <section class="hero">
+        <div class="hero-heading">Weddings &amp; Illustrations</div>
+      </section>
+
+      <div class="media-item image-slot" data-name="Tulya &amp; Tarek Wedding"><img src="assets/01-tulya-tarek-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Tulya &amp; Tarek Wedding"><img src="assets/02-tulya-tarek-2.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Tulya &amp; Tarek Wedding"><img src="assets/03-tulya-tarek-3.jpg" loading="lazy" alt=""></div>
+
+      <div class="media-item video-slot" data-name="İpek &amp; Zeki Wedding"><video data-src="assets/04-ipek-zeki.mp4" muted loop playsinline preload="metadata"></video></div>
+
+      <div class="media-item image-slot" data-name="McKenzie &amp; Childs Tea Time Menu"><img src="assets/05-mckenzie-childs-menu.jpg" loading="lazy" alt=""></div>
+
+      <div class="media-item video-slot" data-name="Jilla &amp; Arman Wedding"><video data-src="assets/06-jilla-arman.mp4" muted loop playsinline preload="metadata"></video></div>
+
+      <div class="media-item image-slot" data-name="Zeynep &amp; Hussain Wedding"><img src="assets/07-zeynep-hussain-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Zeynep &amp; Hussain Wedding"><img src="assets/08-zeynep-hussain-2.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Zeynep &amp; Hussain Wedding"><img src="assets/09-zeynep-hussain-3.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Zeynep &amp; Hussain Wedding"><img src="assets/10-zeynep-hussain-4.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Zeynep &amp; Hussain Wedding"><img src="assets/11-zeynep-hussain-5.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Zeynep &amp; Hussain Wedding"><img src="assets/12-zeynep-hussain-6.jpg" loading="lazy" alt=""></div>
+      <div class="media-item video-slot" data-name="Zeynep &amp; Hussain Wedding Invitation"><video data-src="assets/13-zeynep-hussain-invitation.mp4" muted loop playsinline preload="metadata"></video></div>
+
+      <div class="media-item image-slot" data-name="Sima &amp; Mark Wedding"><img src="assets/14-sima-mark-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Sima &amp; Mark Wedding"><img src="assets/15-sima-mark-2.jpg" loading="lazy" alt=""></div>
+      <div class="media-item video-slot" data-name="Sima &amp; Mark Wedding"><video data-src="assets/16-sima-mark-3.mp4" muted loop playsinline preload="metadata"></video></div>
+
+      <div class="media-item image-slot" data-name="Hanzade's Birthday"><img src="assets/17-hanzade-birthday-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Hanzade's Birthday"><img src="assets/18-hanzade-birthday-2.jpg" loading="lazy" alt=""></div>
+
+      <div class="media-item video-slot" data-name="Mina &amp; Cahit Wedding"><video data-src="assets/19-mina-cahit.mp4" muted loop playsinline preload="metadata"></video></div>
+
+      <div class="media-item video-slot" data-name="Twist Valentine's Campaign"><video data-src="assets/20-twist-valentines-campaign.mp4" muted loop playsinline preload="metadata"></video></div>
+
+      <div class="media-item image-slot" data-name="Pürnur &amp; Berkay Wedding"><img src="assets/21-purnur-berkay-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Pürnur &amp; Berkay Wedding"><img src="assets/22-purnur-berkay-2.jpg" loading="lazy" alt=""></div>
+
+      <div class="media-item video-slot" data-name="Hande &amp; Alperen Wedding"><video data-src="assets/23-hande-alperen.mp4" muted loop playsinline preload="metadata"></video></div>
+
+      <div class="media-item image-slot" data-name="Yasemin &amp; Emrecan Wedding"><img src="assets/24-yasemin-emrecan-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Yasemin &amp; Emrecan Wedding"><img src="assets/25-yasemin-emrecan-2.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Yasemin &amp; Emrecan Wedding"><img src="assets/26-yasemin-emrecan-3.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Yasemin &amp; Emrecan Wedding"><img src="assets/27-yasemin-emrecan-4.jpg" loading="lazy" alt=""></div>
+      <div class="media-item video-slot" data-name="Yasemin &amp; Emrecan Wedding Invitation"><video data-src="assets/28-yasemin-emrecan-invitation.mp4" muted loop playsinline preload="metadata"></video></div>
+
+      <div class="media-item image-slot" data-name="Nazlı &amp; Eren Wedding"><img src="assets/29-nazli-eren-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Nazlı &amp; Eren Wedding"><img src="assets/30-nazli-eren-2.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Nazlı &amp; Eren Wedding"><img src="assets/31-nazli-eren-3.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Nazlı &amp; Eren Wedding"><img src="assets/32-nazli-eren-4.jpg" loading="lazy" alt=""></div>
+
+      <div class="media-item image-slot" data-name="Elif &amp; Alen Wedding"><img src="assets/33-elif-alen-1.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Elif &amp; Alen Wedding"><img src="assets/34-elif-alen-2.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Elif &amp; Alen Wedding"><img src="assets/35-elif-alen-3.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Elif &amp; Alen Wedding"><img src="assets/36-elif-alen-4.jpg" loading="lazy" alt=""></div>
+      <div class="media-item image-slot" data-name="Elif &amp; Alen Wedding"><img src="assets/37-elif-alen-5.jpg" loading="lazy" alt=""></div>
+      <div class="media-item video-slot" data-name="Elif &amp; Alen Wedding Invitation"><video data-src="assets/38-elif-alen-invitation.mp4" muted loop playsinline preload="metadata"></video></div>
+
+    </main>
+
+  </div>
+
+<script>
+  (function(){
+    var itemTitle = document.getElementById('itemTitle');
+    var items = Array.prototype.slice.call(document.querySelectorAll('.media-item'));
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var video = entry.target.querySelector('video');
+        if(entry.isIntersecting){
+          itemTitle.textContent = entry.target.getAttribute('data-name');
+          itemTitle.classList.add('visible');
+          if(video){
+            if(!video.src && video.dataset.src){ video.src = video.dataset.src; }
+            video.play().catch(function(){});
+          }
+        } else if(video){
+          video.pause();
+        }
+      });
+    }, { threshold: 0.5 });
+    items.forEach(function(el){ io.observe(el); });
+
+    var heroIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ itemTitle.classList.remove('visible'); }
+      });
+    }, { threshold: 0.3 });
+    var heroEl = document.querySelector('.hero');
+    if(heroEl){ heroIo.observe(heroEl); }
+  })();
+</script>
+
+<script>
+  (function(){
+    var CORRECT_HASH = '158a323a7ba44870f23d96f1516dd70aa48e9a72db4ebb026b0a89e212a208ab';
+    var gate = document.getElementById('gate');
+    var content = document.getElementById('siteContent');
+    var form = document.getElementById('gateForm');
+    var input = document.getElementById('gatePassword');
+    var err = document.getElementById('gateErr');
+
+    function sha256(str){
+      var data = new TextEncoder().encode(str);
+      return crypto.subtle.digest('SHA-256', data).then(function(buf){
+        return Array.prototype.map.call(new Uint8Array(buf), function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+      });
+    }
+    function unlock(){
+      gate.classList.add('unlocked');
+      content.classList.remove('hidden');
+      try{ localStorage.setItem('weddings-unlocked', '1'); }catch(e){}
+    }
+    if(localStorage.getItem('weddings-unlocked') === '1'){ unlock(); }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      sha256(input.value).then(function(hash){
+        if(hash === CORRECT_HASH){ unlock(); }
+        else { err.classList.add('show'); input.value=''; }
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
