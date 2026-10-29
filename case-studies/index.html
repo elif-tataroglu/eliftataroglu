@@ -101,6 +101,9 @@
   section.hero-stage{ height:100vh; display:flex; align-items:center; justify-content:flex-start; }
   .hero-word{ font-family:'IM Fell French Canon', serif; font-style:italic; font-size:clamp(1.6rem,2.4vw,2.1rem); }
   .hero-stage.chapter-divider{ height:100vh; }
+  .thanks-wrap{ position:relative; }
+  .end-top{ position:absolute; left:0; top:100%; margin-top:3.2em; white-space:nowrap; font-size:0.72rem; letter-spacing:0.16em; color:var(--ink); text-decoration:none; transition:color 0.3s ease; }
+  .end-top:hover{ color:var(--ink-soft); }
 
   .client-intro{ padding: 14vh 0 16vh; }
   .client-intro.follow{ padding-top: 10vh; }
@@ -953,7 +956,10 @@
     <section class="hero-stage chapter-divider" id="thankyou-divider"
       data-eyebrow="THANK YOU" data-heading="Thank You"
       data-body="">
-      <div class="hero-word">Thank You!</div>
+      <div class="thanks-wrap">
+        <div class="hero-word">Thank You!</div>
+        <a class="end-top" href="#" id="endTop">Back to Top</a>
+      </div>
     </section>
 
   </main>
@@ -1122,6 +1128,10 @@
 </script>
 
   </div>
+
+<script>
+  document.getElementById('endTop').addEventListener('click', function(e){ e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+</script>
 
 <script>
   (function(){
