@@ -214,9 +214,24 @@
     .laptop-mockup{ width:100%; margin-right:0; }
     .ads-set{ flex-direction:column; align-items:stretch; }
   }
+  /* ---------- Custom cursor: a solid dot that takes each chapter's colour (fine pointers only) ---------- */
+  .cursor-dot{ display: none; }
+  @media (hover: hover) and (pointer: fine){
+    body, a, #gate input, .index-nav .idx-item, .carousel-dots .dot{ cursor: none; }
+    .cursor-dot{
+      display: block; position: fixed; top: 0; left: 0; width: 16px; height: 16px; border-radius: 50%;
+      background: var(--ink); transform: translate(-50%, -50%); opacity: 0;
+      pointer-events: none; z-index: 10001; will-change: transform;
+      transition: background 0.6s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+    }
+    .cursor-dot.visible{ opacity: 1; }
+    .cursor-dot.on-link{ width: 26px; height: 26px; }
+  }
 </style>
 </head>
 <body>
+
+  <div class="cursor-dot" id="cursorDot"></div>
 
   <div id="gate">
     <form id="gateForm">
@@ -1033,6 +1048,21 @@
     var clientIndexMap = { 'attire-intro':'01', 'moeva-intro':'02', 'lilyrose-intro':'03', 'fleu-intro':'04' };
     var dynIndex = document.getElementById('dynIndex');
 
+    // Custom cursor: a solid dot that takes each chapter's colour as you scroll through it
+    var cursorDot = document.getElementById('cursorDot');
+    var chapterColors = { 'about-edu':'var(--ink)', 'attire-intro':'#3c5a7a', 'moeva-intro':'#2ba8a0', 'lilyrose-intro':'#e8628f', 'fleu-intro':'#e8622f', 'maison-content':'#a02838', 'thankyou':'var(--ink)' };
+    function setCursorColor(chapterKey){
+      if(chapterColors[chapterKey]){ cursorDot.style.background = chapterColors[chapterKey]; }
+    }
+    window.addEventListener('mousemove', function(e){
+      cursorDot.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px) translate(-50%,-50%)';
+      cursorDot.classList.add('visible');
+    }, { passive: true });
+    document.documentElement.addEventListener('mouseleave', function(){ cursorDot.classList.remove('visible'); });
+    document.addEventListener('mouseover', function(e){
+      cursorDot.classList.toggle('on-link', !!(e.target.closest && e.target.closest('a, .idx-item, .dot')));
+    });
+
     function resolveChapter(el0){
       var node = el0;
       while(node){
@@ -1065,6 +1095,7 @@
     function activate(section){
       if(section === current) return;
       current = section; pending = section;
+      setCursorColor(resolveChapter(section));
       dynInner.classList.add('fading');
       setTimeout(function(){
         if(pending !== section) return;
@@ -1092,7 +1123,7 @@
     sections.forEach(function(s){ io.observe(s); });
 
     var heroIo = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){ leftPanel.classList.toggle('at-hero', entry.isIntersecting); });
+      entries.forEach(function(entry){ leftPanel.classList.toggle('at-hero', entry.isIntersecting); if(entry.isIntersecting){ cursorDot.style.background = 'var(--ink)'; } });
     }, { threshold: 0.4 });
     if(heroSection){ heroIo.observe(heroSection); }
 
